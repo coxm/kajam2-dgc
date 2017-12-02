@@ -7,6 +7,7 @@
         "noImplicitAny": false,
         "removeComments": true,
         "noLib": false,
+        "strict": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
     },
