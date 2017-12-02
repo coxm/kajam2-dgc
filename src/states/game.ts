@@ -80,7 +80,7 @@ export class Game extends Phaser.State {
           this.bonuses.splice(this.bonuses.indexOf(bonus), 1);
           bonus.destroy();
         }
-        this.physics.arcade.overlap(bonus, this.burglar, this.onOverlap, null, this);
+        this.physics.arcade.overlap(bonus, this.burglar, this.onOverlap, undefined, this);
       }
 
       // Bonus spawn
