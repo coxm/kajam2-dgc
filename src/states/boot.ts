@@ -16,11 +16,8 @@ export class Boot extends Phaser.State {
 
         this.load.image('loadingBarBg', 'assets/images/loading-bar-bg.png');
         this.load.image('loadingBar', 'assets/images/loading-bar.png');
-        this.load.image('gold1', 'assets/images/gold1.png');
-        this.load.image('gold2', 'assets/images/gold2.png');
-        this.load.image('gold3', 'assets/images/gold3.png');
-        this.load.image('police', 'assets/images/police.png');
-        this.load.spritesheet('burglar', 'assets/images/burglar.png', 173, 160);
+
+        this.load.spritesheet('spritesheet', 'assets/images/spritesheet.png', 128, 128, -1, 0, 2);
     }
 
     create() {
