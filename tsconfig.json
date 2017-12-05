@@ -3,6 +3,7 @@
         "target": "ES5",
         "module": "commonjs",
         "moduleResolution": "node",
+        "outDir": "dist/game",
         "declaration": false,
         "noImplicitAny": false,
         "removeComments": true,
