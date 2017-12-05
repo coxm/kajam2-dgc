@@ -9,22 +9,16 @@ export class Loading extends Phaser.State {
             fill: '#7edcfc'
         };
 
-        let loadingBarBg = this.game.add.sprite(this.game.world.centerX,
-                                                this.game.world.centerY,
-                                                'loadingBarBg');
-        loadingBarBg.tint = 0x7edcfc; // Same blue as text
+        let loadingBarBg = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'loadingBarBg');
+        loadingBarBg.tint = 0x7edcfc;
         loadingBarBg.anchor.setTo(0.5);
 
-        let loadingBar = this.game.add.sprite(this.game.world.centerX - 175,
-                                              this.game.world.centerY - 16,
-                                              'loadingBar');
-        loadingBar.tint = 0xdcfc7e; // A contrasting green
+        let loadingBar = this.game.add.sprite(this.game.world.centerX - 175, this.game.world.centerY - 16, 'loadingBar');
+        loadingBar.tint = 0xdcfc7e;
 
         this.load.setPreloadSprite(loadingBar);
 
-        this.loadingText = this.add.text(this.world.centerX,
-                                         this.world.centerY - 30,
-                                         'Loading...', fontStyle);
+        this.loadingText = this.add.text(this.world.centerX, this.world.centerY - 30, 'Loading...', fontStyle);
         this.loadingText.anchor.setTo(0.5);
 
         this.game.load.onFileComplete.add(this.fileComplete, this);

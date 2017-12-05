@@ -22,18 +22,21 @@ export class Boot extends Phaser.State {
 
     create() {
         this.game.input.maxPointers = 1;
-        //this.game.antialias = false; // For pixel art
-
-        // Uncomment to disable auto-pause on focus loss
-        //this.stage.disableVisibilityChange = true;
+        this.game.antialias = false;
 
         if (!this.game.device.desktop) {
-            this.scale.forceOrientation(true, false); // Landscape
-            //this.scale.forceOrientation(false, true); // Portrait
+            this.scale.forceOrientation(true, false);
         }
 
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
+
+        // prevent page from scrolling upon key presses
+        this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR);
+        this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.UP);
+        this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.DOWN);
+        this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.LEFT);
+        this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.RIGHT);
 
         //this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; // Use max screen space
     }

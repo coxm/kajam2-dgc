@@ -7,7 +7,7 @@ import { Game } from './states/game';
 
 export class MyGame extends Phaser.Game {
     constructor() {
-        super(600, 600);
+        super(900, 600);
 
         this.state.add('Boot', Boot);
         this.state.add('Loading', Loading);
