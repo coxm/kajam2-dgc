@@ -5,9 +5,10 @@
   "main": "index.html",
   "private": "true",
   "scripts": {
+    "start": "http-server dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Matthew Ross <root@matthewross.me> (https://matthewross.me)",
+  "author": "",
   "license": "MIT",
   "devDependencies": {
     "del": "^3.0.0",
