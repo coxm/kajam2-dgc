@@ -35,7 +35,13 @@ export class Loading extends Phaser.State {
         }
     }
 
-    fileComplete(progress, cacheKey, success, totalLoaded, totalFiles) {
+    fileComplete(
+        progress: number|string,
+        cacheKey: string,
+        success: boolean,
+        totalLoaded: number,
+        totalFiles: number
+    ) {
         this.loadingText.setText('Loading... ' + progress + '%');
 
         if (progress === 100) {

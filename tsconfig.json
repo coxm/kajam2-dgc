@@ -5,10 +5,11 @@
         "moduleResolution": "node",
         "outDir": "dist/game",
         "declaration": false,
-        "noImplicitAny": false,
+        "noImplicitAny": true,
         "removeComments": true,
         "noLib": false,
         "strict": true,
+        "strictNullChecks": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
     },
