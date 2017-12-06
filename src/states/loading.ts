@@ -31,7 +31,7 @@ export class Loading extends Phaser.State {
 
     update() {
         if (this.ready) {
-            this.game.state.start('Game');
+            this.game.state.start('Level00');
         }
     }
 
