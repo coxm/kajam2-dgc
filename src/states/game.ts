@@ -35,7 +35,7 @@ export class Game extends Phaser.State {
         }
     }
 
-    createWall(x, y) {
+    createWall(x: number, y: number): Phaser.Sprite {
         let wall = this.add.sprite(x, y, 'spritesheet', 32 * 4 + 9);
         wall.anchor.setTo(0.5);
         this.physics.p2.enable(wall, Constants.DEBUG_SHAPES);

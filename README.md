@@ -6,8 +6,9 @@
 
 1. `npm install`
 2. `gulp watch`
-3. http://localhost:8080/dist
-4. Start coding!
+3. `http-server dist`
+4. `http://localhost:8080`
+5. Start coding!
 
 ## Notes
 
