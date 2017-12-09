@@ -1,5 +1,5 @@
 # vim: sts=4 sw=4 ts=4 noet
-tilemap_tmx_dir=src/assets/tmx
+tilemap_tmx_dir=src/assets/tilemaps
 tilemap_json_dir=dist/assets/tilemaps
 
 
