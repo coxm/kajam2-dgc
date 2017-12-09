@@ -18,6 +18,11 @@
     ],
     "files": [
         "node_modules/phaser-ce/typescript/phaser.d.ts",
-        "src/index.ts"
+        "src/index.ts",
+        "src/constants.ts"
+    ],
+    "include": [
+        "src/objects/*.ts",
+        "src/states/*.ts"
     ]
 }
