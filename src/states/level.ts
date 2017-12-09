@@ -23,6 +23,7 @@ export class Level extends Phaser.State {
     private layer: Phaser.TilemapLayer | null = null;
     private player: Player | null = null;
     private collisionGroups: CollisionGroups | null = null;
+    private scoreLabel: Phaser.BitmapText | null = null;
 
     constructor(readonly id: number) {
         super();
@@ -70,7 +71,9 @@ export class Level extends Phaser.State {
         this.player = new Player(this.game, this.collisionGroups, playerSpawn.x, playerSpawn.y);
         this.camera.follow(this.player);
 
-        this.add.bitmapText(playerSpawn.x - 50, playerSpawn.y - 110, 'upheaval', '0/0 parts', 20);
+        this.scoreLabel = this.add.bitmapText(20, 20, 'upheaval', '0/0 parts', 20);
+        this.scoreLabel.fixedToCamera = true;
+        
         this.add.bitmapText(playerSpawn.x - 50, playerSpawn.y - 80, 'terminal', 'welcome to the\nwonderful world\nof Kommandant RNLF', 11);
     }
 
