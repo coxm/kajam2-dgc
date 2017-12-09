@@ -55,7 +55,8 @@ export class Level extends Phaser.State {
         this.tilemap.setCollisionBetween(0, 999);
 
         this.layer = this.tilemap.createLayer('Ground');
-        this.layer.wrap = true;
+        this.layer.resizeWorld();
+        //this.layer.wrap = true; // not working for collisions it seems
         this.layer.debug = Constants.DEBUG_SHAPES;
 
         let tiles: Phaser.Physics.P2.Body[] = this.physics.p2.convertTilemap(this.tilemap, this.layer);
@@ -64,9 +65,16 @@ export class Level extends Phaser.State {
             tile.collides(this.collisionGroups.objects);
         }
 
-        this.player = new Player(this.game, this.collisionGroups, this.world.centerX, 100);
+        let playerSpawn: Phaser.Point = this.getPlayerSpawnPoint(this.tilemap);
+        this.player = new Player(this.game, this.collisionGroups, playerSpawn.x, playerSpawn.y);
         this.game.camera.follow(this.player);
+    }
 
+    getPlayerSpawnPoint(tilemap: Phaser.Tilemap): Phaser.Point {
+        let objectLayers: any = tilemap.objects;
+        let playerLayer: any[] = objectLayers["Players"];
+        let playerInfo: any = playerLayer[0]; // only one object is supported for now
+        return new Phaser.Point(playerInfo.x, playerInfo.y);
     }
 
     proceedToNextLevel(): void {

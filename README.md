@@ -4,11 +4,12 @@
 
 ## Getting Started
 
-1. `npm install`
-2. `gulp watch`
-3. `http-server dist`
-4. `http://localhost:8080`
-5. Start coding!
+1. `npm install -g gulp http-server`
+2. `npm install`
+3. `gulp watch`
+4. `http-server dist`
+5. `http://localhost:8080`
+6. Start coding!
 
 ## Notes
 
