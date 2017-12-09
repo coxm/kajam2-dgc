@@ -1,6 +1,7 @@
 import { Player } from '../objects/player';
 import { CollisionGroups } from '../objects/collisionGroups';
 import { Constants } from '../constants';
+import { MyGame } from '../index';
 
 const tilesetImage: string = 'assets/images/tiles.png';
 const tilesetImageKey: string = 'basic';
@@ -79,5 +80,9 @@ export class Level extends Phaser.State {
 
     proceedToNextLevel(): void {
         this.game.state.start(toLevelName(this.id + 1));
+    }
+
+    render() {
+        (this.game as MyGame).renderCanvas();
     }
 }

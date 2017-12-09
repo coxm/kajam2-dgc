@@ -1,3 +1,5 @@
+import { MyGame } from '../index';
+
 export class Loading extends Phaser.State {
     ready: boolean = false;
 
@@ -47,5 +49,9 @@ export class Loading extends Phaser.State {
         if (progress === 100) {
             this.ready = true;
         }
+    }
+
+    render() {
+        (this.game as MyGame).renderCanvas();
     }
 }
