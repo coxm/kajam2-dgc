@@ -3,27 +3,27 @@ import { Constants } from '../constants';
 
 export class Player extends Phaser.Sprite {
 
-    SPEED = 400;
+    MOVEMENT_SPEED = 200;
     JUMP_SPEED = 650;
 
     jumpDetector: p2.Rectangle;
     floorShape: any;
 
     canJump: boolean;
+    downKeyHeld: boolean;
 
     constructor(game : Phaser.Game, collisionGroups: CollisionGroups, x : number, y : number) {
-        super(game, x, y, 'spritesheet', 25);
+        super(game, x, y, 'tiles', 1);
 
         this.anchor.setTo(0.5);
 
         game.physics.p2.enable(this, Constants.DEBUG_SHAPES);
 
-        this.body.setCircle(48);
-        this.body.offset = new Phaser.Point(0, -16);
-        this.body.addShape(new p2.Rectangle(3, 1), 0, 40);
-        this.jumpDetector = new p2.Rectangle(2, 1);
+        this.body.setCircle(16);
+        this.body.addShape(new p2.Rectangle(1, 0.5), 0, 12);
+        this.jumpDetector = new p2.Rectangle(0.5, 0.5);
         this.jumpDetector.sensor = true;
-        this.body.addShape(this.jumpDetector, 0, 46);
+        this.body.addShape(this.jumpDetector, 0, 16);
 
         this.body.collideWorldBounds = true;
         this.body.setCollisionGroup(collisionGroups.objects);
@@ -42,15 +42,18 @@ export class Player extends Phaser.Sprite {
     update() {
       // Movement
       if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-          this.body.velocity.x = -this.SPEED;
+          this.body.velocity.x = -this.MOVEMENT_SPEED;
       }
       if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-          this.body.velocity.x = this.SPEED;
+          this.body.velocity.x = this.MOVEMENT_SPEED;
       }
 
-      if (this.canJump && this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+      if (this.canJump && !this.downKeyHeld && this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
           this.body.velocity.y = -this.JUMP_SPEED;
           this.canJump = false;
+          this.downKeyHeld = true;
+      } else if (! this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+          this.downKeyHeld = false;
       }
     }
 
