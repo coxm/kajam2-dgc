@@ -70,7 +70,8 @@ export class Level extends Phaser.State {
         this.player = new Player(this.game, this.collisionGroups, playerSpawn.x, playerSpawn.y);
         this.camera.follow(this.player);
 
-        this.add.bitmapText(playerSpawn.x - 50, playerSpawn.y - 100, 'terminal', '0/0 parts', 11);
+        this.add.bitmapText(playerSpawn.x - 50, playerSpawn.y - 110, 'upheaval', '0/0 parts', 20);
+        this.add.bitmapText(playerSpawn.x - 50, playerSpawn.y - 80, 'terminal', 'welcome to the\nwonderful world\nof Kommandant RNLF', 11);
     }
 
     getPlayerSpawnPoint(tilemap: Phaser.Tilemap): Phaser.Point {

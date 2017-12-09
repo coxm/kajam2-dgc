@@ -23,7 +23,9 @@ export class Loading extends Phaser.State {
         this.loadingText = this.add.text(this.world.centerX, this.world.centerY - 30, 'Loading...', fontStyle);
         this.loadingText.anchor.setTo(0.5);
 
-        this.game.load.bitmapFont('terminal', 'assets/images/terminal_0.png', 'assets/images/terminal.fnt');
+        this.game.load.bitmapFont('terminal', 'assets/images/terminal11_0.png', 'assets/images/terminal11.fnt');
+        this.game.load.bitmapFont('upheaval', 'assets/images/upheaval20_0.png', 'assets/images/upheaval20.fnt');
+
         this.game.load.image('example', 'assets/images/loading-bar.png');
 
         this.game.load.onFileComplete.add(this.fileComplete, this);
