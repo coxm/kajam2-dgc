@@ -2,7 +2,6 @@ import { Boot } from './states/boot';
 import { Loading } from './states/loading';
 import { Game } from './states/game';
 import { Level } from './states/level';
-// Import additional states here
 
 export class MyGame extends Phaser.Game {
     constructor() {

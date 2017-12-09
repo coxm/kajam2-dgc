@@ -21,7 +21,7 @@ export class Player extends Phaser.Sprite {
         this.body.setCircle(48);
         this.body.offset = new Phaser.Point(0, -16);
         this.body.addShape(new p2.Rectangle(3, 1), 0, 40);
-        this.jumpDetector = new p2.Rectangle(0.5, 1);
+        this.jumpDetector = new p2.Rectangle(2, 1);
         this.jumpDetector.sensor = true;
         this.body.addShape(this.jumpDetector, 0, 46);
 
