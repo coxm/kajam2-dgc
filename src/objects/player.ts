@@ -16,7 +16,7 @@ export class Player extends Phaser.Sprite {
     soundChannel: SoundChannel;
 
     constructor(game : Phaser.Game, collisionGroups: CollisionGroups, x : number, y : number) {
-        super(game, x, y, 'tiles', 1);
+        super(game, x, y, 'tiles', 33);
 
         this.anchor.setTo(0.5);
 
