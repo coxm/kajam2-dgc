@@ -20,7 +20,6 @@ var gulp = require('gulp'),
             'node_modules/phaser-ce/build/custom/pixi.js',
             'node_modules/phaser-ce/build/custom/p2.js',
             'node_modules/phaser-ce/build/custom/phaser-creature.js',
-            'node_modules/systemjs/dist/system-polyfills.js',
             'node_modules/systemjs/dist/system.js'
         ],
         ts: 'src/**/*.ts',
@@ -59,6 +58,7 @@ gulp.task('scss', () => {
 
 gulp.task('vendor', () => {
     return gulp.src(paths.vendor)
+        .pipe(jsMin())
         .pipe(concat('vendor.js'))
         .pipe(gulp.dest('dist/js/'));
 });
