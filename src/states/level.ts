@@ -68,7 +68,9 @@ export class Level extends Phaser.State {
 
         let playerSpawn: Phaser.Point = this.getPlayerSpawnPoint(this.tilemap);
         this.player = new Player(this.game, this.collisionGroups, playerSpawn.x, playerSpawn.y);
-        this.game.camera.follow(this.player);
+        this.camera.follow(this.player);
+
+        this.add.bitmapText(playerSpawn.x - 50, playerSpawn.y - 100, 'terminal', '0/0 parts', 11);
     }
 
     getPlayerSpawnPoint(tilemap: Phaser.Tilemap): Phaser.Point {
