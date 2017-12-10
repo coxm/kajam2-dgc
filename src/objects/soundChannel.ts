@@ -1,5 +1,8 @@
 import { Constants } from '../constants';
 
+/**
+ * Supports playing any loaded sound, making sure only one at a time is playing.
+ */
 export class SoundChannel {
 
     game: Phaser.Game;
@@ -9,24 +12,43 @@ export class SoundChannel {
         this.game = game;
     }
 
-    addSound(key: string) {
+    add(key: string): void {
         if (!this.sounds[key]) {
             this.sounds[key] = this.game.add.audio(key);
         }
     }
 
-    play(key: string) {
+    play(key: string, loop: boolean = false): void {
         if (!Constants.DEBUG_MUTE) {
-            this.addSound(key);
+            this.add(key);
             for (let storedKey in this.sounds) {
-                let sound: Phaser.Sound = this.sounds[key];
+                let sound: Phaser.Sound = this.sounds[storedKey];
                 if (storedKey === key) {
+                    sound.loop = loop;
                     sound.play();
                 } else {
                     sound.stop();
                 }
             }
         }
+    }
+
+    stop(key: string): void {
+        let sound: Phaser.Sound | null = get(key);
+        if (sound !== null) {
+            sound.stop();
+        }
+    }
+
+    stopChannel(): void {
+        for (let storedKey in this.sounds) {
+            this.sounds[storedKey].stop();
+        }
+    }
+
+    get(key: string): Phaser.Sound | null {
+        this.add(key);
+        return this.sounds[key];
     }
 
 
