@@ -26,6 +26,7 @@ var gulp = require('gulp'),
         ts: 'src/**/*.ts',
         html: 'src/**/*.html',
         images: 'src/assets/images/**/*.*',
+        audio: 'src/assets/audio/**/*.*',
         scss: 'src/scss/**/*.scss',
         scssMain: 'src/scss/main.scss',
         tilemaps: 'src/assets/tilemaps/*.json'
@@ -68,6 +69,12 @@ gulp.task('images', () => {
         .pipe(gulp.dest('dist/assets/images/'));
 });
 
+gulp.task('audio', () => {
+    return gulp.src(paths.audio)
+        .pipe(gulp.dest('dist/assets/audio/'));
+});
+
+
 gulp.task('tilemaps', () => {
     return gulp.src(paths.tilemaps)
         .pipe(gulp.dest('dist/assets/tilemaps/'));
@@ -101,4 +108,4 @@ gulp.task('watch', () => {
     watchTilemaps.on('change', onChanged);
 });
 
-gulp.task('default', [ 'html', 'tsc', 'scss', 'vendor', 'images', 'tilemaps' ]);
+gulp.task('default', [ 'html', 'tsc', 'scss', 'vendor', 'images', 'audio', 'tilemaps' ]);

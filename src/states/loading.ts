@@ -28,6 +28,9 @@ export class Loading extends Phaser.State {
 
         this.game.load.image('example', 'assets/images/loading-bar.png');
 
+        this.game.load.audio('jump', 'assets/audio/jump.wav');
+
+
         this.game.load.onFileComplete.add(this.fileComplete, this);
 
         this.game.load.start(); // Required so the onFileComplete listener is called

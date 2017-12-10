@@ -1,5 +1,6 @@
 import { CollisionGroups } from '../objects/collisionGroups';
 import { Constants } from '../constants';
+import { SoundChannel } from './soundChannel';
 
 export class Player extends Phaser.Sprite {
 
@@ -11,6 +12,8 @@ export class Player extends Phaser.Sprite {
 
     canJump: boolean;
     downKeyHeld: boolean;
+
+    soundChannel: SoundChannel;
 
     constructor(game : Phaser.Game, collisionGroups: CollisionGroups, x : number, y : number) {
         super(game, x, y, 'tiles', 1);
@@ -36,6 +39,8 @@ export class Player extends Phaser.Sprite {
         this.body.onBeginContact.add(this.onBeginContact, this);
         this.body.onEndContact.add(this.onEndContact, this);
 
+        this.soundChannel = new SoundChannel(game);
+
         game.world.add(this);
     }
 
@@ -52,7 +57,8 @@ export class Player extends Phaser.Sprite {
           this.body.velocity.y = -this.JUMP_SPEED;
           this.canJump = false;
           this.downKeyHeld = true;
-      } else if (! this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+          this.soundChannel.play('jump');
+      } else if (!this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
           this.downKeyHeld = false;
       }
     }
