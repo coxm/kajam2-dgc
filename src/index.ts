@@ -2,6 +2,7 @@ import { Boot } from './states/boot';
 import { Loading } from './states/loading';
 import { AbstractState } from './states/abstract';
 import { Level } from './states/level';
+import { Title } from './states/title';
 import { Constants } from './constants';
 
 export class MyGame extends Phaser.Game {
@@ -32,12 +33,12 @@ export class MyGame extends Phaser.Game {
         this.scaledCanvasContext = scaledCanvas.getContext('2d') as CanvasRenderingContext2D;
         Phaser.Canvas.addToDOM(scaledCanvas, document.getElementById('phaser') as any);
         Phaser.Canvas.setSmoothingEnabled(this.scaledCanvasContext, false);
-
     }
 
     initStates() {
         this.state.add('Boot', Boot);
         this.state.add('Loading', Loading);
+        this.state.add('Title', Title);
 
         for (let i = 0; i < Constants.LEVEL_COUNT; ++i) {
             const level = new Level(i);
@@ -66,4 +67,4 @@ export class MyGame extends Phaser.Game {
     }
 }
 
-new MyGame(); // This kicks everything off
+new MyGame();

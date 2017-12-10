@@ -1,6 +1,8 @@
 import { MyGame } from '../index';
+import { Constants } from '../constants';
+import { AbstractState } from './abstract';
 
-export class Loading extends Phaser.State {
+export class Loading extends AbstractState {
     ready: boolean = false;
 
     loadingText: Phaser.Text;
@@ -27,18 +29,26 @@ export class Loading extends Phaser.State {
         this.game.load.bitmapFont('upheaval', 'assets/images/upheaval20_0.png', 'assets/images/upheaval20.fnt');
 
         this.game.load.image('example', 'assets/images/loading-bar.png');
+        this.game.load.image('title', 'assets/images/title.png');
+
+        this.game.load.spritesheet('tileset', 'assets/images/tileset.png', 16, 16);
 
         this.game.load.audio('jump', 'assets/audio/jump.wav');
 
+        this.game.load.tilemap('TitleScreen', 'assets/tilemaps/TitleScreen.json', null, Phaser.Tilemap.TILED_JSON);
 
         this.game.load.onFileComplete.add(this.fileComplete, this);
 
-        this.game.load.start(); // Required so the onFileComplete listener is called
+        this.game.load.start();
     }
 
     update() {
         if (this.ready) {
-            this.game.state.start('Level01');
+            if (Constants.DEBUG_SKIP_TITLE) {
+                this.game.state.start('Level01');
+            } else {
+                this.game.state.start('Title');
+            }
         }
     }
 
@@ -54,9 +64,5 @@ export class Loading extends Phaser.State {
         if (progress === 100) {
             this.ready = true;
         }
-    }
-
-    render() {
-        (this.game as MyGame).renderCanvas();
     }
 }

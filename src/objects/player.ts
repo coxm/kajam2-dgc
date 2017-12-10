@@ -40,8 +40,6 @@ export class Player extends Phaser.Sprite {
         this.body.onEndContact.add(this.onEndContact, this);
 
         this.soundChannel = new SoundChannel(game);
-
-        game.world.add(this);
     }
 
     update() {

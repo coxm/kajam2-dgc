@@ -26,6 +26,8 @@ export class Boot extends Phaser.State {
         this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.DOWN);
         this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.LEFT);
         this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.RIGHT);
+        this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.ENTER);
+        this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.ESC);
         this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.M);
         
         //this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; // Use max screen space

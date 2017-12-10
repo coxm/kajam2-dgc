@@ -70,6 +70,7 @@ export class Level extends AbstractState {
 
         let playerSpawn: Phaser.Point = this.getPlayerSpawnPoint(this.tilemap);
         this.player = new Player(this.game, this.collisionGroups, playerSpawn.x, playerSpawn.y);
+        this.world.add(this.player);
         this.camera.follow(this.player);
 
         this.scoreLabel = this.add.bitmapText(20, 20, 'upheaval', '0/0 parts', 20);
@@ -87,13 +88,5 @@ export class Level extends AbstractState {
 
     proceedToNextLevel(): void {
         this.game.state.start(toLevelName(this.id + 1));
-    }
-
-    render() {
-        (this.game as MyGame).renderCanvas();
-    }
-
-    onUnmute(): void {
-        console.log("unmute music");
     }
 }
