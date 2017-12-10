@@ -2,6 +2,7 @@ import { Player } from '../objects/player';
 import { CollisionGroups } from '../objects/collisionGroups';
 import { Constants } from '../constants';
 import { MyGame } from '../index';
+import { AbstractState } from './abstract';
 
 const tilesetImage: string = 'assets/images/tiles.png';
 const tilesetImageKey: string = 'basic';
@@ -16,7 +17,7 @@ const toLevelName = (id: number): string => {
 };
 
 
-export class Level extends Phaser.State {
+export class Level extends AbstractState {
     readonly name: string;
 
     private tilemap: Phaser.Tilemap | null = null;
@@ -73,7 +74,7 @@ export class Level extends Phaser.State {
 
         this.scoreLabel = this.add.bitmapText(20, 20, 'upheaval', '0/0 parts', 20);
         this.scoreLabel.fixedToCamera = true;
-        
+
         this.add.bitmapText(playerSpawn.x - 50, playerSpawn.y - 80, 'terminal', 'welcome to the\nwonderful world\nof Kommandant RNLF', 11);
     }
 
@@ -90,5 +91,9 @@ export class Level extends Phaser.State {
 
     render() {
         (this.game as MyGame).renderCanvas();
+    }
+
+    onUnmute(): void {
+        console.log("unmute music");
     }
 }

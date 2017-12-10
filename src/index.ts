@@ -1,5 +1,6 @@
 import { Boot } from './states/boot';
 import { Loading } from './states/loading';
+import { AbstractState } from './states/abstract';
 import { Level } from './states/level';
 import { Constants } from './constants';
 
@@ -9,6 +10,9 @@ export class MyGame extends Phaser.Game {
 
     scaledWidth: number = Constants.WIDTH * Constants.PIXEL_SCALING;
     scaledHeight: number = Constants.HEIGHT * Constants.PIXEL_SCALING;
+
+    mute: boolean = false;
+    muteKeyDown: boolean = false;
 
     constructor() {
         super(Constants.WIDTH, Constants.HEIGHT, Phaser.CANVAS, '', {
@@ -45,6 +49,20 @@ export class MyGame extends Phaser.Game {
 
     renderCanvas() {
         this.scaledCanvasContext.drawImage(this.canvas, 0, 0, this.width, this.height, 0, 0, this.scaledWidth, this.scaledHeight);
+
+        if (this.input.keyboard.isDown(Phaser.Keyboard.M) && !this.muteKeyDown) {
+            this.mute = !this.mute;
+            this.muteKeyDown = true;
+            if (this.mute) {
+                this.sound.stopAll();
+            } else {
+                if (this.state.getCurrentState() instanceof AbstractState) {
+                    (this.state.getCurrentState() as AbstractState).onUnmute();
+                }
+            }
+        } else if (!this.input.keyboard.isDown(Phaser.Keyboard.M)) {
+            this.muteKeyDown = false;
+        }
     }
 }
 
