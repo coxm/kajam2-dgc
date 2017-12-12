@@ -43,11 +43,11 @@
                  "id":3,
                  "name":"",
                  "rotation":0,
-                 "type":"",
+                 "type":"health",
                  "visible":true,
                  "width":32,
-                 "x":536,
-                 "y":464
+                 "x":608,
+                 "y":480
                 }],
          "opacity":1,
          "type":"objectgroup",
