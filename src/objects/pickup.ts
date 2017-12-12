@@ -62,7 +62,7 @@ export class Pickup extends Phaser.Sprite {
         this.body.static = true;
         this.body.collideWorldBounds = true;
         this.body.setCollisionGroup(collisionGroups.pickups);
-        this.body.collides(collisionGroups.objects); // TODO: change to players
+        this.body.collides(collisionGroups.player);
         this.body.fixedRotation = true;
         this.body.damping = 0.9;
         this.body.inertia = 0;

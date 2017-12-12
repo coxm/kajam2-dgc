@@ -68,7 +68,7 @@ export class Level extends AbstractState {
         let tiles: Phaser.Physics.P2.Body[] = this.physics.p2.convertTilemap(this.tilemap, this.layer);
         for (let tile of tiles) {
             tile.setCollisionGroup(this.collisionGroups.environment);
-            tile.collides(this.collisionGroups.objects);
+            tile.collides(this.collisionGroups.player);
             tile.debug = Constants.DEBUG_BODIES;
         }
 

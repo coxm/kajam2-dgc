@@ -30,8 +30,8 @@ export class Player extends Phaser.Sprite {
         this.body.addShape(this.jumpDetector, 0, 16);
 
         this.body.collideWorldBounds = true;
-        this.body.setCollisionGroup(collisionGroups.objects);
-        this.body.collides(collisionGroups.objects);
+        this.body.setCollisionGroup(collisionGroups.player);
+        this.body.collides(collisionGroups.player);
         this.body.collides(collisionGroups.environment);
         this.body.fixedRotation = true;
         this.body.damping = 0.9;
