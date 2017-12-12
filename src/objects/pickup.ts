@@ -58,6 +58,7 @@ export class Pickup extends Phaser.Sprite {
 
         // Init physics.
         game.physics.p2.enable(this, Constants.DEBUG_SHAPES);
+        this.body.debug = Constants.DEBUG_BODIES;
         this.body.static = true;
         this.body.collideWorldBounds = true;
         this.body.setCollisionGroup(collisionGroups.pickups);
