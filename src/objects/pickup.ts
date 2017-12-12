@@ -53,7 +53,7 @@ export class Pickup extends Phaser.Sprite {
         this.anchor.setTo(0, 1);
         console.log('new Pickup', defn);
 
-        console.assert(traits[defn.type], 'No such pickup traits:', defn.type);
+       // console.assert(traits[defn.type], 'No such pickup traits:', defn.type);
         this.traits = traits[defn.type](game, this, defn);
 
         // Init physics.

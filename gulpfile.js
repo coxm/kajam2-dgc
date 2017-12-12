@@ -20,6 +20,7 @@ var gulp = require('gulp'),
             'node_modules/phaser-ce/build/custom/pixi.js',
             'node_modules/phaser-ce/build/custom/p2.js',
             'node_modules/phaser-ce/build/custom/phaser-creature.js',
+            'node_modules/systemjs/dist/system-polyfills.js',
             'node_modules/systemjs/dist/system.js'
         ],
         ts: 'src/**/*.ts',
@@ -58,9 +59,13 @@ gulp.task('scss', () => {
 
 gulp.task('vendor', () => {
     return gulp.src(paths.vendor)
-        .pipe(jsMin())
         .pipe(concat('vendor.js'))
-   //     .pipe(gulp.dest('dist/js/'));
+        .pipe(gulp.dest('dist/js/'));
+});
+
+gulp.task('vendor-debug', () => {
+    return gulp.src(paths.vendor)
+        .pipe(gulp.dest('dist/js/'));
 });
 
 gulp.task('images', () => {
@@ -108,4 +113,4 @@ gulp.task('watch', () => {
     watchTilemaps.on('change', onChanged);
 });
 
-gulp.task('default', [ 'html', 'tsc', 'scss', 'vendor', 'images', 'audio', 'tilemaps' ]);
+gulp.task('default', [ 'html', 'tsc', 'scss', 'vendor', 'vendor-debug', 'images', 'audio', 'tilemaps' ]);
