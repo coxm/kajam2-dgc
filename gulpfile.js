@@ -60,7 +60,7 @@ gulp.task('vendor', () => {
     return gulp.src(paths.vendor)
         .pipe(jsMin())
         .pipe(concat('vendor.js'))
-        .pipe(gulp.dest('dist/js/'));
+   //     .pipe(gulp.dest('dist/js/'));
 });
 
 gulp.task('images', () => {
