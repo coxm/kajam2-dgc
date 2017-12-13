@@ -84,16 +84,16 @@ export class Level extends AbstractState {
         this.physics.p2.setBounds(0, 0, this.world.width, this.world.height);
         this.physics.p2.setImpactEvents(true);
         this.physics.p2.gravity.y = Constants.GRAVITY;
-        this.physics.p2.world.defaultContactMaterial.friction = 0.99;
+        this.physics.p2.world.defaultContactMaterial.friction = 0;
         this.physics.p2.world.setGlobalStiffness(1e5);
     }
 
     create(): void {
-        this.stage.backgroundColor = '#FFD';
+        let tilesetKey = TILESETS[this.name] || 'tileset';
+        this.stage.backgroundColor = (tilesetKey === 'basic') ? '#FFD' : '#555';
 
         this.collisionGroups = new CollisionGroups(this.game);
 
-        let tilesetKey = TILESETS[this.name] || 'tileset';
         this.tilemap = this.add.tilemap(this.name);
         this.tilemap.addTilesetImage(tilesetKey);
         if (tilesetKey === 'basic') this.tilemap.setCollisionBetween(0, 999);
@@ -125,7 +125,7 @@ export class Level extends AbstractState {
         this.score.label.fixedToCamera = true;
         this.score.max = this.pickups.length;
 
-        this.add.bitmapText(playerSpawn.x - 50, playerSpawn.y - 80, 'terminal', 'welcome to the\nwonderful world\nof Kommandant RNLF', 11);
+     //   this.add.bitmapText(playerSpawn.x - 50, playerSpawn.y - 80, 'terminal', 'welcome to the\nwonderful world\nof Kommandant RNLF', 11);
     }
 
     getPlayerSpawnPoint(tilemap: Phaser.Tilemap): Phaser.Point {

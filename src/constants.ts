@@ -12,15 +12,15 @@ export namespace Constants {
     );
 
     // Canvas
-    export const WIDTH: number = 447; // = 16 * 28
-    export const HEIGHT: number = 304; // = 16 * 19
+    export const WIDTH: number = 384; // = 16 * 24
+    export const HEIGHT: number = 288; // = 16 * 18
     export const PIXEL_SCALING: number = 2;
 
     // Contents
     export const LEVEL_COUNT: number = 3;
 
     // Physics
-    export const GRAVITY: number = 1600;
+    export const GRAVITY: number = 800;
 
     // Debug
     export const DEBUG_OBJECT_BODIES: boolean = !!search['debug-bodies'];
