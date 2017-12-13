@@ -5,7 +5,7 @@ import { SoundChannel } from './soundChannel';
 export class Player extends Phaser.Sprite {
 
     MOVEMENT_SPEED = 140;
-    JUMP_SPEED = 400;
+    jumpSpeed = 400;
 
     jumpDetector: p2.Rectangle;
     floorShape: any;
@@ -59,7 +59,7 @@ export class Player extends Phaser.Sprite {
       this.body.velocity.x = dx/(Math.abs(dx) || 1) * Math.min(this.MOVEMENT_SPEED, Math.abs(dx)); // clamp
 
       if (this.canJump && !this.downKeyHeld && this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-          this.body.velocity.y = -this.JUMP_SPEED;
+          this.body.velocity.y = -this.jumpSpeed;
           this.canJump = false;
           this.downKeyHeld = true;
           this.soundChannel.play('jump');

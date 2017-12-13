@@ -2,6 +2,7 @@ import { Player } from '../objects/player';
 import { Pickup } from '../objects/pickup';
 import '../objects/health';
 import '../objects/hardware';
+import '../objects/pogo';
 import { CollisionGroups } from '../objects/collisionGroups';
 import { Constants } from '../constants';
 import { MyGame } from '../index';
