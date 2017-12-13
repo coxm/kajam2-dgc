@@ -46,8 +46,8 @@
                  "type":"health",
                  "visible":true,
                  "width":32,
-                 "x":416,
-                 "y":416
+                 "x":496,
+                 "y":448
                 }],
          "opacity":1,
          "type":"objectgroup",
