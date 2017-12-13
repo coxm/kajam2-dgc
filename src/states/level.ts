@@ -48,7 +48,7 @@ export class Level extends AbstractState {
         this.physics.p2.setBounds(0, 0, this.world.width, this.world.height);
         this.physics.p2.setImpactEvents(true);
         this.physics.p2.gravity.y = Constants.GRAVITY;
-        this.physics.p2.world.defaultContactMaterial.friction = 0.99;
+        this.physics.p2.world.defaultContactMaterial.friction = 0;
         this.physics.p2.world.setGlobalStiffness(1e5);
     }
 
