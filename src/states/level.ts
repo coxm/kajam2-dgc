@@ -53,11 +53,11 @@ export class Level extends AbstractState {
     }
 
     create(): void {
-        this.stage.backgroundColor = '#FFD';
+        let tilesetKey = TILESETS[this.name] || 'tileset';
+        this.stage.backgroundColor = (tilesetKey === 'basic') ? '#FFD' : '#555';
 
         this.collisionGroups = new CollisionGroups(this.game);
 
-        let tilesetKey = TILESETS[this.name] || 'tileset';
         this.tilemap = this.add.tilemap(this.name);
         this.tilemap.addTilesetImage(tilesetKey);
         if (tilesetKey === 'basic') this.tilemap.setCollisionBetween(0, 999);
