@@ -21,7 +21,7 @@ export class Player extends Phaser.Sprite {
         this.anchor.setTo(0.5);
 
         game.physics.p2.enable(this, Constants.DEBUG_SHAPES);
-        this.body.debug = Constants.DEBUG_BODIES;
+        this.body.debug = Constants.DEBUG_OBJECT_BODIES;
 
         this.body.setCircle(16);
         this.body.addShape(new p2.Rectangle(1, 0.5), 0, 12);
