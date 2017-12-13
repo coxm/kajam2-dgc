@@ -87,7 +87,7 @@ export class Level extends AbstractState {
         this.scoreLabel = this.add.bitmapText(20, 20, 'upheaval', '0/0 parts', 20);
         this.scoreLabel.fixedToCamera = true;
 
-        this.add.bitmapText(playerSpawn.x - 50, playerSpawn.y - 80, 'terminal', 'welcome to the\nwonderful world\nof Kommandant RNLF', 11);
+     //   this.add.bitmapText(playerSpawn.x - 50, playerSpawn.y - 80, 'terminal', 'welcome to the\nwonderful world\nof Kommandant RNLF', 11);
     }
 
     getPlayerSpawnPoint(tilemap: Phaser.Tilemap): Phaser.Point {

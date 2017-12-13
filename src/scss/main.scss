@@ -1,9 +1,17 @@
 body {
-    background-color: #333;
+    background-color: #221612;
+
+    #overlay {
+        position: fixed;
+        left: 50%;
+        margin-left: -25%;
+        margin-top: -10px;
+    }
 
     #phaser canvas {
         border: 1px solid #424242;
         border-radius: 3px;
         margin: auto;
+        margin-top: 188px;
     }
 }
