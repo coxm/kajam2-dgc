@@ -57,9 +57,10 @@ export class Level extends AbstractState {
 
         this.collisionGroups = new CollisionGroups(this.game);
 
+        let tilesetKey = TILESETS[this.name] || 'tileset';
         this.tilemap = this.add.tilemap(this.name);
-        this.tilemap.addTilesetImage(TILESETS[this.name]);
-        if (TILESETS[this.name] === 'basic') this.tilemap.setCollisionBetween(0, 999);
+        this.tilemap.addTilesetImage(tilesetKey);
+        if (tilesetKey === 'basic') this.tilemap.setCollisionBetween(0, 999);
         else this.tilemap.setCollisionBetween(16, 999);
 
         this.layer = this.tilemap.createLayer('Ground');
@@ -75,7 +76,6 @@ export class Level extends AbstractState {
         }
 
         let playerSpawn: Phaser.Point = this.getPlayerSpawnPoint(this.tilemap);
-        console.log(playerSpawn);
         this.player = new Player(this.game, this.collisionGroups, playerSpawn.x, playerSpawn.y);
         this.world.add(this.player);
         this.camera.follow(this.player);

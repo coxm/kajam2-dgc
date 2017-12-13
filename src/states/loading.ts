@@ -30,7 +30,7 @@ export class Loading extends AbstractState {
 
         this.game.load.image('example', 'assets/images/loading-bar.png');
         this.game.load.image('title', 'assets/images/title.png');
-        this.game.load.image('tiles', 'assets/images/tiles.png');
+        this.game.load.image('basic', 'assets/images/tiles.png');
         this.game.load.image('tileset', 'assets/images/tileset.png');
 
         this.game.load.spritesheet('tilesetSheet', 'assets/images/tileset.png', 16, 16);
