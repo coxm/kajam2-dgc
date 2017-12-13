@@ -1,6 +1,7 @@
 import { Player } from '../objects/player';
 import { Pickup } from '../objects/pickup';
 import '../objects/health';
+import '../objects/hardware';
 import { CollisionGroups } from '../objects/collisionGroups';
 import { Constants } from '../constants';
 import { MyGame } from '../index';
@@ -21,15 +22,50 @@ const toLevelName = (id: number): string => {
 };
 
 
+export class Score {
+    constructor(
+        public label: Phaser.BitmapText | null = null,
+        private _max: number = 0,
+        private _val: number = 0
+    ) {
+        this.updateText();
+    }
+
+    get max(): number {
+        return this._max;
+    }
+
+    set max(m: number) {
+        this._max = m;
+        this.updateText();
+    }
+
+    get value(): number {
+        return this._val;
+    }
+
+    set value(v: number) {
+        this._val = v;
+        this.updateText();
+    }
+
+    private updateText(): void {
+        if (this.label) {
+            this.label.text = `${this._val}/${this._max} parts`;
+        }
+    }
+}
+
+
 export class Level extends AbstractState {
     readonly name: string;
+    readonly score = new Score();
 
     private tilemap: Phaser.Tilemap | null = null;
     private layer: Phaser.TilemapLayer | null = null;
     private player: Player | null = null;
     private pickups: Pickup[] = [];
     private collisionGroups: CollisionGroups | null = null;
-    private scoreLabel: Phaser.BitmapText | null = null;
 
     constructor(readonly id: number) {
         super();
@@ -79,13 +115,15 @@ export class Level extends AbstractState {
         this.player = new Player(this.game, this.collisionGroups, playerSpawn.x, playerSpawn.y);
         this.world.add(this.player);
         this.camera.follow(this.player);
+
         // Suspect the Phaser typings are out of date here.
         for (const obj of (this.tilemap.objects as any).Pickups) {
             this.pickups.push(new Pickup(this.game, this.collisionGroups, obj));
         }
 
-        this.scoreLabel = this.add.bitmapText(20, 20, 'upheaval', '0/0 parts', 20);
-        this.scoreLabel.fixedToCamera = true;
+        this.score.label = this.add.bitmapText(20, 20, 'upheaval', '', 20);
+        this.score.label.fixedToCamera = true;
+        this.score.max = this.pickups.length;
 
         this.add.bitmapText(playerSpawn.x - 50, playerSpawn.y - 80, 'terminal', 'welcome to the\nwonderful world\nof Kommandant RNLF', 11);
     }
