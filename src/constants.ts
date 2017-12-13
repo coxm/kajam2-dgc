@@ -20,7 +20,7 @@ export namespace Constants {
     export const LEVEL_COUNT: number = 3;
 
     // Physics
-    export const GRAVITY: number = 1400;
+    export const GRAVITY: number = 800;
 
     // Debug
     export const DEBUG_OBJECT_BODIES: boolean = !!search['debug-bodies'];
