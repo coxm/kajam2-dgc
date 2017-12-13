@@ -50,15 +50,12 @@ export class Pickup extends Phaser.Sprite {
     ) {
         // Not sure why but the GID seems to be one too large.
         super(game, defn.x, defn.y, 'tiles', defn.gid - 1);
-        this.width = 32;
-        this.height = 32;
-        this.anchor.setTo(0, 1);
 
         console.assert(!!traits[defn.type], 'No such pickup traits:', defn.type);
         this.traits = traits[defn.type](game, this, defn);
 
         // Init physics.
-       /* game.physics.p2.enable(this, Constants.DEBUG_SHAPES);
+        game.physics.p2.enable(this, Constants.DEBUG_SHAPES);
         this.body.debug = Constants.DEBUG_OBJECT_BODIES;
         this.body.static = true;
         this.body.collideWorldBounds = true;
@@ -70,9 +67,15 @@ export class Pickup extends Phaser.Sprite {
         for (const shape of this.body.data.shapes) {
             shape.sensor = true;
         }
-        this.traits.initBody(game, this, this.body);
+        if (this.traits.initBody) {
+            this.traits.initBody(game, this, this.body);
+        }
 
-        this.body.onBeginContact.add(this.onBeginContact, this);*/
+        // Correct the sprite & body positions.
+        this.body.x += (this.width / 2) | 0;
+        this.body.y -= (this.height / 2) | 0;
+
+        this.body.onBeginContact.add(this.onBeginContact, this);
         game.world.add(this);
     }
 
