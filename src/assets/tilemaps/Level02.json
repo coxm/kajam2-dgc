@@ -36,14 +36,38 @@
         {
          "draworder":"topdown",
          "name":"Pickups",
-         "objects":[],
+         "objects":[
+                {
+                 "gid":51,
+                 "height":16,
+                 "id":14,
+                 "name":"",
+                 "rotation":0,
+                 "type":"health",
+                 "visible":true,
+                 "width":16,
+                 "x":368,
+                 "y":383.5
+                }, 
+                {
+                 "gid":51,
+                 "height":16,
+                 "id":17,
+                 "name":"",
+                 "rotation":0,
+                 "type":"health",
+                 "visible":true,
+                 "width":16,
+                 "x":31,
+                 "y":383.5
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
          "x":0,
          "y":0
         }],
- "nextobjectid":14,
+ "nextobjectid":23,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
