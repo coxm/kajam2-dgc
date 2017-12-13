@@ -51,7 +51,6 @@ export class Pickup extends Phaser.Sprite {
         // Not sure why but the GID seems to be one too large.
         super(game, defn.x, defn.y, 'tiles', defn.gid - 1);
         this.anchor.setTo(0, 1);
-        console.log('new Pickup', defn);
 
         console.assert(!!traits[defn.type], 'No such pickup traits:', defn.type);
         this.traits = traits[defn.type](game, this, defn);
@@ -79,12 +78,11 @@ export class Pickup extends Phaser.Sprite {
         }
     }
 
-    onBeginContact(other: Phaser.Physics.P2.Body): void {
-        console.log('onBeginContact');
+    onBeginContact(other: Phaser.Physics.P2.Body | null): void {
         if (this.consumer) {
             return;
         }
-        if (other.sprite instanceof Player) {
+        if (other && other.sprite instanceof Player) {
             this.consumer = other.sprite;
         }
     }
