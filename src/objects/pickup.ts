@@ -15,11 +15,11 @@ export interface PickupOptions {
 /** An object defining pickup behaviour. */
 export interface Traits {
     /** Initialise the Pickup body. */
-    initBody(
+    initBody?: (
         game: Phaser.Game,
         owner: Pickup,
         body: Phaser.Physics.P2.Body
-    ): void;
+    ) => void;
 
     /** React to a pickup being consumed. */
     onConsumed(
