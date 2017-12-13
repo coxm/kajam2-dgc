@@ -59,13 +59,15 @@ export class Pickup extends Phaser.Sprite {
         game.physics.p2.enable(this, Constants.DEBUG_SHAPES);
         this.body.debug = Constants.DEBUG_OBJECT_BODIES;
         this.body.static = true;
-        this.body.sensor = true;
         this.body.collideWorldBounds = true;
         this.body.setCollisionGroup(collisionGroups.pickups);
         this.body.collides(collisionGroups.player);
         this.body.fixedRotation = true;
         this.body.damping = 0.9;
         this.body.inertia = 0;
+        for (const shape of this.body.data.shapes) {
+            shape.sensor = true;
+        }
         this.traits.initBody(game, this, this.body);
 
         this.body.onBeginContact.add(this.onBeginContact, this);
