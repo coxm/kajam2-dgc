@@ -58,11 +58,11 @@ export class Pickup extends Phaser.Sprite {
 
         // Init physics.
         game.physics.p2.enable(this, Constants.DEBUG_SHAPES);
-        this.body.debug = Constants.DEBUG_BODIES;
-        this.body.static = true;
+        this.body.debug = Constants.DEBUG_OBJECT_BODIES;
         this.body.collideWorldBounds = true;
         this.body.setCollisionGroup(collisionGroups.pickups);
         this.body.collides(collisionGroups.player);
+        this.body.collides(collisionGroups.environment);
         this.body.fixedRotation = true;
         this.body.damping = 0.9;
         this.body.inertia = 0;
@@ -75,23 +75,17 @@ export class Pickup extends Phaser.Sprite {
     update(): void {
         if (this.consumer) {
             this.traits.onConsumed(this, this.consumer, this.defn);
-            this.kill();
-            // TODO: play sounds, etc.
+            this.destroy();
         }
     }
 
-    onBeginContact(
-        pickupBody: Phaser.Physics.P2.Body,
-        otherBody: Phaser.Physics.P2.Body
-    )
-        : void
-    {
+    onBeginContact(other: Phaser.Physics.P2.Body): void {
         console.log('onBeginContact');
         if (this.consumer) {
             return;
         }
-        if (otherBody.sprite instanceof Player) {
-            this.consumer = otherBody.sprite;
+        if (other.sprite instanceof Player) {
+            this.consumer = other.sprite;
         }
     }
 }

@@ -69,7 +69,7 @@ export class Level extends AbstractState {
         for (let tile of tiles) {
             tile.setCollisionGroup(this.collisionGroups.environment);
             tile.collides(this.collisionGroups.player);
-            tile.debug = Constants.DEBUG_BODIES;
+            tile.debug = Constants.DEBUG_TILE_BODIES;
         }
 
         let playerSpawn: Phaser.Point = this.getPlayerSpawnPoint(this.tilemap);

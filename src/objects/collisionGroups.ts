@@ -1,4 +1,3 @@
-// TODO: add `players` collision group.
 export class CollisionGroups {
     player: Phaser.Physics.P2.CollisionGroup;
     environment: Phaser.Physics.P2.CollisionGroup;
