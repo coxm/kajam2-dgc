@@ -6,8 +6,10 @@ import { Constants } from '../constants';
 import { MyGame } from '../index';
 import { AbstractState } from './abstract';
 
-const tilesetImage: string = 'assets/images/tiles.png';
-const tilesetImageKey: string = 'basic';
+const TILESETS: any = {
+    'Level01': 'basic',
+    'Level02': 'tileset'
+};
 
 
 const toLevelName = (id: number): string => {
@@ -41,7 +43,6 @@ export class Level extends AbstractState {
             undefined,
             Phaser.Tilemap.TILED_JSON
         );
-        this.load.image(tilesetImageKey, tilesetImage);
 
         this.physics.startSystem(Phaser.Physics.P2JS);
         this.physics.p2.setBounds(0, 0, this.world.width, this.world.height);
@@ -57,8 +58,9 @@ export class Level extends AbstractState {
         this.collisionGroups = new CollisionGroups(this.game);
 
         this.tilemap = this.add.tilemap(this.name);
-        this.tilemap.addTilesetImage(tilesetImageKey);
-        this.tilemap.setCollisionBetween(0, 999);
+        this.tilemap.addTilesetImage(TILESETS[this.name]);
+        if (TILESETS[this.name] === 'basic') this.tilemap.setCollisionBetween(0, 999);
+        else this.tilemap.setCollisionBetween(16, 999);
 
         this.layer = this.tilemap.createLayer('Ground');
         this.layer.resizeWorld();
@@ -73,6 +75,7 @@ export class Level extends AbstractState {
         }
 
         let playerSpawn: Phaser.Point = this.getPlayerSpawnPoint(this.tilemap);
+        console.log(playerSpawn);
         this.player = new Player(this.game, this.collisionGroups, playerSpawn.x, playerSpawn.y);
         this.world.add(this.player);
         this.camera.follow(this.player);

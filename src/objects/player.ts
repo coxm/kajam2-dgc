@@ -16,18 +16,18 @@ export class Player extends Phaser.Sprite {
     soundChannel: SoundChannel;
 
     constructor(game : Phaser.Game, collisionGroups: CollisionGroups, x : number, y : number) {
-        super(game, x, y, 'tiles', 33);
+        super(game, x, y, 'tilesetSheet', 16 * 3 + 1);
 
         this.anchor.setTo(0.5);
 
         game.physics.p2.enable(this, Constants.DEBUG_SHAPES);
         this.body.debug = Constants.DEBUG_OBJECT_BODIES;
 
-        this.body.setCircle(16);
-        this.body.addShape(new p2.Rectangle(1, 0.5), 0, 12);
+        this.body.setCircle(8);
+        this.body.addShape(new p2.Rectangle(0.5, 0.3), 0, 6);
         this.jumpDetector = new p2.Rectangle(0.5, 0.5);
         this.jumpDetector.sensor = true;
-        this.body.addShape(this.jumpDetector, 0, 16);
+        this.body.addShape(this.jumpDetector, 0, 8);
 
         this.body.collideWorldBounds = true;
         this.body.setCollisionGroup(collisionGroups.player);
