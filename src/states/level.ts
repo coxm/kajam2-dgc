@@ -1,5 +1,6 @@
 import { Player } from '../objects/player';
 import { Pickup } from '../objects/pickup';
+import { Cat } from '../objects/cat';
 import '../objects/health';
 import '../objects/hardware';
 import '../objects/pogo';
@@ -113,7 +114,12 @@ export class Level extends AbstractState {
             tile.debug = Constants.DEBUG_TILE_BODIES;
         }
 
-        let playerSpawn: Phaser.Point = this.getPlayerSpawnPoint(this.tilemap);
+        let catSpawn: Phaser.Point|null = this.getSpawnPoint(this.tilemap, 'cat');
+        if (catSpawn !== null) {
+            this.world.add(new Cat(this.game, this.collisionGroups, catSpawn.x, catSpawn.y));
+        }
+
+        let playerSpawn: Phaser.Point = this.getSpawnPoint(this.tilemap, 'player') || new Phaser.Point();
         this.player = new Player(this.game, this.collisionGroups, playerSpawn.x, playerSpawn.y);
         this.world.add(this.player);
         this.camera.follow(this.player);
@@ -131,11 +137,15 @@ export class Level extends AbstractState {
      //   this.add.bitmapText(playerSpawn.x - 50, playerSpawn.y - 80, 'terminal', 'welcome to the\nwonderful world\nof Kommandant RNLF', 11);
     }
 
-    getPlayerSpawnPoint(tilemap: Phaser.Tilemap): Phaser.Point {
+    getSpawnPoint(tilemap: Phaser.Tilemap, type: string): Phaser.Point | null {
         let objectLayers: any = tilemap.objects;
-        let playerLayer: any[] = objectLayers.Players;
-        let playerInfo: any = playerLayer[0]; // only one object is supported for now
-        return new Phaser.Point(playerInfo.x, playerInfo.y);
+        let playersLayer: any[] = objectLayers.Players;
+        for (let object of playersLayer) {
+            if (object.type === type) {
+                return new Phaser.Point(object.x, object.y);
+            }
+        }
+        return null;
     }
 
     proceedToNextLevel(): void {

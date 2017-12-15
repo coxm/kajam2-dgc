@@ -18,14 +18,26 @@
                 {
                  "gid":50,
                  "height":16,
-                 "id":13,
+                 "id":31,
                  "name":"",
                  "rotation":0,
-                 "type":"",
+                 "type":"player",
                  "visible":true,
                  "width":16,
                  "x":416,
                  "y":480
+                }, 
+                {
+                 "gid":66,
+                 "height":16,
+                 "id":32,
+                 "name":"",
+                 "rotation":0,
+                 "type":"cat",
+                 "visible":true,
+                 "width":16,
+                 "x":208.333333333333,
+                 "y":479.333333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -115,7 +127,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":31,
+ "nextobjectid":33,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
