@@ -9,8 +9,8 @@ import { Constants } from '../constants';
 import { MyGame } from '../index';
 import { AbstractState } from './abstract';
 
-const TILESETS: any = {
-    'Level01': 'basic',
+const TILESETS: {[levelId: string]: string;} = {
+    'Level01': 'tileset',
     'Level02': 'tileset'
 };
 
@@ -93,14 +93,13 @@ export class Level extends AbstractState {
 
     create(): void {
         let tilesetKey = TILESETS[this.name] || 'tileset';
-        this.stage.backgroundColor = (tilesetKey === 'basic') ? '#FFD' : '#555';
+        this.stage.backgroundColor = '#555';
 
         this.collisionGroups = new CollisionGroups(this.game);
 
         this.tilemap = this.add.tilemap(this.name);
         this.tilemap.addTilesetImage(tilesetKey);
-        if (tilesetKey === 'basic') this.tilemap.setCollisionBetween(0, 999);
-        else this.tilemap.setCollisionBetween(16 * 4, 999);
+        this.tilemap.setCollisionBetween(16 * 4, 999);
 
         this.layer = this.tilemap.createLayer('Ground');
         this.layer.resizeWorld();
