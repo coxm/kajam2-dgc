@@ -5,25 +5,37 @@ import { AbstractState } from './abstract';
 export class Loading extends AbstractState {
     ready: boolean = false;
 
-    loadingText: Phaser.Text;
+    private message = {
+        text: null as Phaser.Text | null,
+        lastChanged: Date.now(),
+        frameDuration: 512,
+        spinners: '-/|\\',
+        index: 0,
+        update(): void {
+            const now = Date.now();
+            if (now < this.lastChanged + this.frameDuration) {
+                return;
+            }
+            this.index = (this.index + 1) % this.spinners.length;
+            this.text!.text = 'Loading... ' + this.spinners[this.index];
+            this.lastChanged = now;
+        },
+    };
 
     create() {
-        let fontStyle = {
-            font: '18px Walter Turncoat',
-            fill: '#7edcfc'
-        };
-
-        let loadingBarBg = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'loadingBarBg');
-        loadingBarBg.tint = 0x7edcfc;
-        loadingBarBg.anchor.setTo(0.5);
-
-        let loadingBar = this.game.add.sprite(this.game.world.centerX - 175, this.game.world.centerY - 16, 'loadingBar');
-        loadingBar.tint = 0xdcfc7e;
-
-        this.load.setPreloadSprite(loadingBar);
-
-        this.loadingText = this.add.text(this.world.centerX, this.world.centerY - 30, 'Loading...', fontStyle);
-        this.loadingText.anchor.setTo(0.5);
+        this.message.text = this.add.text(
+            this.world.centerX - 30,
+            this.world.centerY - 30,
+            'Loading...',
+            {
+                font: '11px Terminal',
+                fill: '#fff',
+                fontWeight: 'bold',
+            }
+        );
+        // Anchor from the left so it doesn't move when the spinner changes.
+        this.message.text.anchor.setTo(0);
+        this.stage.backgroundColor = '0x00f';
 
         this.game.load.bitmapFont('terminal', 'assets/images/terminal11_0.png', 'assets/images/terminal11.fnt');
         this.game.load.bitmapFont('upheaval', 'assets/images/upheaval20_0.png', 'assets/images/upheaval20.fnt');
@@ -47,6 +59,8 @@ export class Loading extends AbstractState {
     }
 
     update() {
+        this.message.update();
+
         if (this.ready) {
             if (Constants.DEBUG_FORCE_LEVEL) {
                 console.log("Debug: loading level " + Constants.DEBUG_FORCE_LEVEL)
@@ -66,10 +80,9 @@ export class Loading extends AbstractState {
         totalLoaded: number,
         totalFiles: number
     ) {
-        this.loadingText.setText('Loading... ' + progress + '%');
-
         if (progress === 100) {
-            this.ready = true;
+            // Nothing says retro like slow loading.
+            setTimeout((): void => { this.ready = true; }, 1000);
         }
     }
 }
