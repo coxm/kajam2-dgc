@@ -12,6 +12,7 @@ export class Boot extends Phaser.State {
     create() {
         this.game.input.maxPointers = 1;
         this.game.antialias = false;
+        this.game.renderer.renderSession.roundPixels = true;
 
         if (!this.game.device.desktop) {
             this.scale.forceOrientation(true, false);

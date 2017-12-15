@@ -67,6 +67,7 @@ export class Level extends AbstractState {
     private player: Player | null = null;
     private pickups: Pickup[] = [];
     private collisionGroups: CollisionGroups | null = null;
+    private hardwarePartCount: number = 0;
 
     constructor(readonly id: number) {
         super();
@@ -98,7 +99,7 @@ export class Level extends AbstractState {
         this.tilemap = this.add.tilemap(this.name);
         this.tilemap.addTilesetImage(tilesetKey);
         if (tilesetKey === 'basic') this.tilemap.setCollisionBetween(0, 999);
-        else this.tilemap.setCollisionBetween(16, 999);
+        else this.tilemap.setCollisionBetween(16 * 4, 999);
 
         this.layer = this.tilemap.createLayer('Ground');
         this.layer.resizeWorld();
@@ -120,11 +121,12 @@ export class Level extends AbstractState {
         // Suspect the Phaser typings are out of date here.
         for (const obj of (this.tilemap.objects as any).Pickups) {
             this.pickups.push(new Pickup(this.game, this.collisionGroups, obj));
+            if (obj.type === 'hardware') this.hardwarePartCount++;
         }
 
         this.score.label = this.add.bitmapText(20, 20, 'upheaval', '', 20);
         this.score.label.fixedToCamera = true;
-        this.score.max = this.pickups.length;
+        this.score.max = this.hardwarePartCount;
 
      //   this.add.bitmapText(playerSpawn.x - 50, playerSpawn.y - 80, 'terminal', 'welcome to the\nwonderful world\nof Kommandant RNLF', 11);
     }

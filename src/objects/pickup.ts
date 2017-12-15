@@ -49,13 +49,14 @@ export class Pickup extends Phaser.Sprite {
         readonly defn: PickupOptions
     ) {
         // Not sure why but the GID seems to be one too large.
-        super(game, defn.x, defn.y, 'tiles', defn.gid - 1);
+        super(game, defn.x, defn.y, (defn.type === 'hardware') ? 'hardwareSheet' : 'tilesetSheet', defn.gid - 1);
 
         console.assert(!!traits[defn.type], 'No such pickup traits:', defn.type);
         this.traits = traits[defn.type](game, this, defn);
 
         // Init physics.
         game.physics.p2.enable(this, Constants.DEBUG_SHAPES);
+        this.body.setCircle(4);
         this.body.debug = Constants.DEBUG_OBJECT_BODIES;
         this.body.static = true;
         this.body.collideWorldBounds = true;
@@ -64,6 +65,7 @@ export class Pickup extends Phaser.Sprite {
         this.body.fixedRotation = true;
         this.body.damping = 0.9;
         this.body.inertia = 0;
+
         for (const shape of this.body.data.shapes) {
             shape.sensor = true;
         }
@@ -83,6 +85,12 @@ export class Pickup extends Phaser.Sprite {
         if (this.consumer) {
             this.traits.onConsumed(this, this.consumer, this.defn);
             this.destroy();
+        }
+
+        // Animate sprite
+        if (this.game) {
+            let seconds = Math.floor(this.game.time.time / 1000);
+            this.scale.x = (seconds % 2) === 1 ? 1 : -1;
         }
     }
 

@@ -29,7 +29,7 @@ var gulp = require('gulp'),
         audio: 'src/assets/audio/**/*.*',
         scss: 'src/scss/**/*.scss',
         scssMain: 'src/scss/main.scss',
-        tilemaps: 'src/assets/tilemaps/*.json'
+        tilemaps: 'src/assets/tilemaps/*.*'
     };
 
 gulp.task('clean', () => del('dist/'));
