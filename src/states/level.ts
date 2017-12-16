@@ -66,6 +66,7 @@ export class Level extends AbstractState {
     private tilemap: Phaser.Tilemap | null = null;
     private layer: Phaser.TilemapLayer | null = null;
     private player: Player | null = null;
+    private overlay: Phaser.TilemapLayer | null = null;
     private pickups: Pickup[] = [];
     private collisionGroups: CollisionGroups | null = null;
     private hardwarePartCount: number = 0;
@@ -128,6 +129,8 @@ export class Level extends AbstractState {
             this.pickups.push(new Pickup(this.game, this.collisionGroups, obj));
             if (obj.type === 'hardware') this.hardwarePartCount++;
         }
+
+        this.overlay = this.tilemap.createLayer('Overlay');
 
         this.score.label = this.add.bitmapText(20, 20, 'upheaval', '', 20);
         this.score.label.fixedToCamera = true;
