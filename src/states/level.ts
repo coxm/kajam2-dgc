@@ -15,12 +15,16 @@ const TILESETS: {[levelId: string]: string;} = {
 };
 
 
-const toLevelName = (id: number): string => {
-    let str = 'Level';
-    if (id < 10) {
-        str += '0';
+const toLevelName = (id: number|string): string => {
+    if (typeof id === 'number') {
+        let str = 'Level';
+        if (id < 10) {
+            str += '0';
+        }
+        return str + id;
+    } else {
+        return id;
     }
-    return str + id;
 };
 
 
@@ -71,12 +75,15 @@ export class Level extends AbstractState {
     private collisionGroups: CollisionGroups | null = null;
     private hardwarePartCount: number = 0;
     private escapeKey: Phaser.Key;
-    private myGame : MyGame;
+    private hideGui: boolean;
 
-    constructor(readonly id: number, game: MyGame) {
+    protected myGame : MyGame;
+
+    constructor(readonly id: number|string, game: MyGame, hideGui: boolean = false) {
         super();
         this.name = toLevelName(id);
         this.myGame = game;
+        this.hideGui = hideGui;
     }
 
     preload(): void {
@@ -109,7 +116,6 @@ export class Level extends AbstractState {
 
         this.layer = this.tilemap.createLayer('Ground');
         this.layer.resizeWorld();
-        //this.layer.wrap = true; // not working for collisions it seems
         this.layer.debug = Constants.DEBUG_SHAPES;
 
         let tiles: Phaser.Physics.P2.Body[] = this.physics.p2.convertTilemap(this.tilemap, this.layer);
@@ -124,10 +130,12 @@ export class Level extends AbstractState {
             this.world.add(new Cat(this.game, this.collisionGroups, catSpawn.x, catSpawn.y));
         }
 
-        let playerSpawn: Phaser.Point = this.getSpawnPoint(this.tilemap, 'player') || new Phaser.Point();
-        this.player = new Player(this.game, this.collisionGroups, playerSpawn.x, playerSpawn.y);
-        this.world.add(this.player);
-        this.camera.follow(this.player);
+        let playerSpawn: Phaser.Point|null = this.getSpawnPoint(this.tilemap, 'player');
+        if (playerSpawn != null) {
+            this.player = new Player(this.game, this.collisionGroups, playerSpawn.x, playerSpawn.y);
+            this.world.add(this.player);
+            this.camera.follow(this.player);
+        }
 
         // Suspect the Phaser typings are out of date here.
         for (const obj of (this.tilemap.objects as any).Pickups) {
@@ -137,19 +145,21 @@ export class Level extends AbstractState {
 
         this.overlay = this.tilemap.createLayer('Overlay');
 
-        this.score.label = this.add.bitmapText(20, 20, 'upheaval', '', 20);
-        this.score.label.fixedToCamera = true;
-        this.score.max = this.hardwarePartCount;
-
-     //   this.add.bitmapText(playerSpawn.x - 50, playerSpawn.y - 80, 'terminal', 'welcome to the\nwonderful world\nof Kommandant RNLF', 11);
+        if (!this.hideGui) {
+            this.score.label = this.add.bitmapText(20, 20, 'upheaval', '', 20);
+            this.score.label.fixedToCamera = true;
+            this.score.max = this.hardwarePartCount;
+        }
     }
 
     getSpawnPoint(tilemap: Phaser.Tilemap, type: string): Phaser.Point | null {
         let objectLayers: any = tilemap.objects;
-        let playersLayer: any[] = objectLayers.Players;
-        for (let object of playersLayer) {
-            if (object.type === type) {
-                return new Phaser.Point(object.x, object.y);
+        let playersLayer: any[]|null = objectLayers.Players;
+        if (playersLayer != null) {
+            for (let object of playersLayer) {
+                if (object.type === type) {
+                    return new Phaser.Point(object.x, object.y);
+                }
             }
         }
         return null;
@@ -169,6 +179,8 @@ export class Level extends AbstractState {
     }
 
     proceedToNextLevel(): void {
-        this.game.state.start(toLevelName(this.id + 1));
+        if (typeof this.id === 'number') {
+            this.game.state.start(toLevelName(this.id + 1));
+        }
     }
 }

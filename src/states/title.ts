@@ -1,29 +1,24 @@
-import { AbstractState } from './abstract';
+import { Level } from './Level';
 import { Menu } from '../objects/menu';
 import { SoundChannel } from '../objects/soundChannel';
 import { MyGame } from '../index';
 
-export class Title extends AbstractState {
+export class Title extends Level {
 
-    private myGame : MyGame;
+    logo: Phaser.Sprite;
+    musicStartTime: number = 0;
+
 
     constructor(game: MyGame) {
-        super();
-        this.myGame = game;
+        super('TitleScreen', game, true);
     }
 
     create() {
-        this.add.sprite(0, 0, 'title');
+        super.create();
 
-        let mapGroup = this.add.group();
+        this.logo = this.add.sprite(0, 0, 'title');
 
-        let map = this.add.tilemap('TitleScreen');
-        map.addTilesetImage('tileset', 'tileset');
-        for (let i = 0; i < map.layers.length; i++) {
-            map.createLayer(i, undefined, undefined, mapGroup);
-        }
-
-        let menu = new Menu(this.game, 150, 172, ['Start game', 'Story', 'Controls'], this.onMenuExit, this)
+        let menu = new Menu(this.game, 110, 168, ['Start game', 'Story', 'Controls'], this.onMenuExit, this)
         this.world.add(menu);
     }
 
@@ -35,7 +30,11 @@ export class Title extends AbstractState {
         }
         if (this.myGame.musicChannel.lastPlayed !== 'music_title') {
             this.myGame.musicChannel.play('music_title', true, 0.8);
+            this.musicStartTime = this.game.time.time;
         }
+
+        // Animate logo
+        this.logo.y = -8./*px*/ * (((this.game.time.time - this.musicStartTime) * 129/*bpm*/ / 60) % 1000) / 1000;
     }
 
 
