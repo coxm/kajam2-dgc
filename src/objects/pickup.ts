@@ -49,7 +49,9 @@ export class Pickup extends Phaser.Sprite {
         readonly defn: PickupOptions
     ) {
         // Not sure why but the GID seems to be one too large.
-        super(game, defn.x, defn.y, (defn.type === 'hardware') ? 'hardwareSheet' : 'tilesetSheet', defn.gid - 1);
+        super(game, defn.x, defn.y,
+            (defn.type === 'hardware') ? 'hardwareSheet' : 'tilesetSheet',
+            (defn.type === 'hardware') ? defn.gid - 257 : defn.gid - 1);
 
         console.assert(!!defn.type, 'Pickup type is undefined');
         console.assert(!!traits[defn.type], 'No such pickup traits:', defn.type);
