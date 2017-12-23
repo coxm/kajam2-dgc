@@ -29,5 +29,5 @@ export namespace Constants {
     export const DEBUG_SHAPES: boolean = false;
     export const DEBUG_MUTE: boolean = false;
     export const DEBUG_SKIP_TITLE: boolean = false;
-    export const DEBUG_FAST_LOADING: boolean = true;
+    export const DEBUG_FAST_LOADING: boolean = false;
 }
