@@ -52,6 +52,7 @@ export class Loading extends AbstractState {
         this.stage.backgroundColor = '0x00f';
 
         this.game.load.bitmapFont('terminal', 'assets/images/terminal11_0.png', 'assets/images/terminal11.fnt');
+        this.game.load.bitmapFont('terminal_light', 'assets/images/terminal11light_0.png', 'assets/images/terminal11.fnt');
         this.game.load.bitmapFont('upheaval', 'assets/images/upheaval20_0.png', 'assets/images/upheaval20.fnt');
 
         this.game.load.image('example', 'assets/images/loading-bar.png');

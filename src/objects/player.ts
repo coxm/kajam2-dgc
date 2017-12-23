@@ -52,6 +52,10 @@ export class Player extends LivingThing {
           this.downKeyHeld = false;
           this.body.velocity.y = Math.max(0, this.body.velocity.y);
       }
+
+      if (this.y > this.game.world.height + 100) {
+          this.game.state.restart();
+      }
     }
 
     initShapesAndReturnJumpDetector(body: p2.Body): p2.Rectangle {

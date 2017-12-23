@@ -18,8 +18,10 @@ export class Title extends Level {
 
         this.logo = this.add.sprite(0, 0, 'title');
 
-        let menu = new Menu(this.game, 110, 168, ['Start game', 'Story', 'Controls'], this.onMenuExit, this)
+        let menu = new Menu(this.game, 100, 160, ['Start game', 'Story', 'Controls'], this.onMenuExit, this)
         this.world.add(menu);
+
+        this.addText(104, 215, '(please use UP/DOWN and ENTER)', true)
     }
 
     update() {
