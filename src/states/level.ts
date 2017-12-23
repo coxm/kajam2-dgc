@@ -40,10 +40,10 @@ export class Level extends AbstractState {
     private pickups: Pickup[] = [];
     private collisionGroups: CollisionGroups | null = null;
     private hardwarePartCount: number = 0;
-    private escapeKey: Phaser.Key;
     private restartKey: Phaser.Key;
     private hideGui: boolean;
 
+    protected escapeKey: Phaser.Key;
     protected myGame : MyGame;
 
     constructor(readonly id: number|string, game: MyGame, hideGui: boolean = false) {

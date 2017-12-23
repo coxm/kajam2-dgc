@@ -21,6 +21,10 @@ export class Ending extends Level {
     update() {
         this.ensureAmbientSound();
         this.myGame.musicChannel.stopChannel();
+        if (this.escapeKey.justDown) {
+            this.state.start('Title');
+            this.myGame.sfxChannel.play('menu_confirm');
+        }
     }
 
     onMenuExit(selectedOption: number) {
