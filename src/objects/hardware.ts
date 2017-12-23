@@ -8,9 +8,9 @@ const hardware: Traits = {
         let myGame: MyGame = consumer.game as MyGame;
         myGame.sfxChannel.play('super_item');
 
+        myGame.score.value++;
         const level = pickup.game.state.getCurrentState() as Level;
-        ++level.score.value;
-        console.log('Hardware pickup consumed!');
+        level.proceedToNextLevel();
     },
 }
 

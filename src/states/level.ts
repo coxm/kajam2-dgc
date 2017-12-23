@@ -28,44 +28,9 @@ const toLevelName = (id: number|string): string => {
 };
 
 
-export class Score {
-    constructor(
-        public label: Phaser.BitmapText | null = null,
-        private _max: number = 0,
-        private _val: number = 0
-    ) {
-        this.updateText();
-    }
-
-    get max(): number {
-        return this._max;
-    }
-
-    set max(m: number) {
-        this._max = m;
-        this.updateText();
-    }
-
-    get value(): number {
-        return this._val;
-    }
-
-    set value(v: number) {
-        this._val = v;
-        this.updateText();
-    }
-
-    private updateText(): void {
-        if (this.label) {
-            this.label.text = `${this._val}/${this._max} parts`;
-        }
-    }
-}
-
 
 export class Level extends AbstractState {
     readonly name: string;
-    readonly score = new Score();
 
     private tilemap: Phaser.Tilemap | null = null;
     private layer: Phaser.TilemapLayer | null = null;
@@ -146,9 +111,7 @@ export class Level extends AbstractState {
         this.overlay = this.tilemap.createLayer('Overlay');
 
         if (!this.hideGui) {
-            this.score.label = this.add.bitmapText(20, 20, 'upheaval', '', 20);
-            this.score.label.fixedToCamera = true;
-            this.score.max = this.hardwarePartCount;
+            this.myGame.score.addToWorld(this.world);
         }
     }
 
@@ -179,8 +142,19 @@ export class Level extends AbstractState {
     }
 
     proceedToNextLevel(): void {
-        if (typeof this.id === 'number') {
-            this.game.state.start(toLevelName(this.id + 1));
-        }
+        setTimeout(() => {
+            if (typeof this.id === 'number') {
+                let nextLevel = this.id + 1;
+                if (nextLevel < Constants.LEVEL_COUNT) {
+                    this.game.state.start(toLevelName(nextLevel));
+                } else {
+                    this.game.state.start('Title'); // End
+                }
+            }
+        }, 1000);
+    }
+
+    shutdown() {
+        this.world.removeAll();
     }
 }

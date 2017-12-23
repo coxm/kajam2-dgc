@@ -59,9 +59,11 @@ export class Loading extends AbstractState {
         this.game.load.image('title', 'assets/images/title.png');
         this.game.load.image('tileset', 'assets/images/tileset.png');
         this.game.load.image('hero', 'assets/images/hero.png');
+        this.game.load.image('hud', 'assets/images/hud.png');
 
         this.game.load.spritesheet('tilesetSheet', 'assets/images/tileset.png', 16, 16);
         this.game.load.spritesheet('hardwareSheet', 'assets/images/hardware.png', 32, 32);
+        this.game.load.spritesheet('hardwareMissingSheet', 'assets/images/hardware_missing.png', 32, 32);
 
         for (let soundName of this.SOUNDS) {
             this.game.load.audio(soundName, ['assets/audio/' + soundName + '.ogg', 'assets/audio/' + soundName + '.mp3']);
@@ -82,7 +84,7 @@ export class Loading extends AbstractState {
                 console.log("Debug: loading level " + Constants.DEBUG_FORCE_LEVEL)
                 this.game.state.start(Constants.DEBUG_FORCE_LEVEL);
             } else if (Constants.DEBUG_SKIP_TITLE) {
-                this.game.state.start('Level00');
+                this.game.state.start('Level01');
             } else {
                 this.game.state.start('Title');
             }

@@ -5,10 +5,7 @@ import { SoundChannel } from './soundChannel';
 export abstract class LivingThing extends Phaser.Sprite {
 
     private jumpDetector: p2.Rectangle;
-    private floorShape: any;
-
-    canJump: boolean = true;
-    neverJumped: boolean = true; // hack to prevent broken jump if player tile is placed too low on the map
+    private collidingFloorShapes: any[] = [];
 
     soundChannel: SoundChannel;
 
@@ -46,36 +43,36 @@ export abstract class LivingThing extends Phaser.Sprite {
         // Override me
     }
 
-    update() {
-      if (!this.canJump && this.floorShape !== null && this.body.velocity.y > -1) {
-          // Jumped while hitting a ceiling
-          this.canJump = true;
-      }
-    }
-
     protected jump(): boolean {
       if (this.canJump) {
           this.body.velocity.y = -this.getJumpSpeed();
-          this.canJump = false;
-          this.neverJumped = true;
           return true;
       } else {
           return false;
       }
     }
 
+    get canJump(): boolean {
+        return this.collidingFloorShapes.length > 0
+    }
+
     onBeginContact(body: Phaser.Physics.P2.Body, otherBody: Phaser.Physics.P2.Body, shape: any, otherShape: any, contactEqs: any[]) {
         if (shape === this.jumpDetector) {
-            this.canJump = true;
-            this.floorShape = otherShape;
-            this.onLanding();
+            if (this.collidingFloorShapes.length === 0) {
+                this.onLanding();
+            }
+            if (this.collidingFloorShapes.indexOf(otherShape) === -1) {
+                this.collidingFloorShapes.push(otherShape);
+            }
         }
     }
 
     onEndContact(body: Phaser.Physics.P2.Body, otherBody: Phaser.Physics.P2.Body, shape: any, otherShape: any) {
-        if (shape === this.jumpDetector && otherShape === this.floorShape && !this.neverJumped) {
-            this.canJump = false;
-            this.floorShape = null;
+        if (shape === this.jumpDetector) {
+            let index = this.collidingFloorShapes.indexOf(otherShape)
+            if (index !== -1) {
+                this.collidingFloorShapes.splice(index, 1);
+            }
         }
     }
 
