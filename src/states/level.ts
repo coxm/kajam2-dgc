@@ -8,6 +8,7 @@ import { CollisionGroups } from '../objects/collisionGroups';
 import { Constants } from '../constants';
 import { MyGame } from '../index';
 import { AbstractState } from './abstract';
+import { SoundChannel } from '../objects/soundChannel';
 
 const TILESETS: {[levelId: string]: string;} = {
     'Level01': 'tileset',
@@ -138,10 +139,16 @@ export class Level extends AbstractState {
         return null;
     }
 
-    update() {
-        if (this.myGame.ambientChannel.lastPlayed !== 'ambient_loop') {
+    ensureAmbientSound() {
+        let ambientChannel: SoundChannel = this.myGame.ambientChannel;
+        let ambientSound: Phaser.Sound|null = ambientChannel.get(ambientChannel.lastPlayed);
+        if (ambientSound !== null && !ambientSound.isPlaying) {
             this.myGame.ambientChannel.play('ambient_loop', true);
         }
+    }
+
+    update() {
+        this.ensureAmbientSound();
         if (this.myGame.musicChannel.lastPlayed !== 'music_level') {
             this.myGame.musicChannel.play('music_level', true, 0.8);
         }
@@ -161,7 +168,7 @@ export class Level extends AbstractState {
                 if (nextLevel <= Constants.LEVEL_COUNT) {
                     this.game.state.start(toLevelName(nextLevel));
                 } else {
-                    this.game.state.start('Title'); // End
+                    this.game.state.start('Ending');
                 }
             }
         }, 1000);

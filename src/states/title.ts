@@ -63,6 +63,14 @@ export class Title extends Level {
                  this.state.start('Level01');
                  break;
 
+             case 2: 
+                 this.state.start('Story');
+                 break;
+
+             case 3: 
+                 this.state.start('Controls');
+                 break;
+
              default:
                  break;
          }

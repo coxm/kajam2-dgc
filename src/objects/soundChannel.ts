@@ -41,12 +41,16 @@ export class SoundChannel {
         if (sound !== null) {
             sound.stop();
         }
+        if (key === this.lastPlayed) {
+            this.lastPlayed = null;
+        }
     }
 
     stopChannel(): void {
         for (let storedKey in this.sounds) {
             this.sounds[storedKey].stop();
         }
+        this.lastPlayed = null;
     }
 
     get(key: string|null): Phaser.Sound | null {
