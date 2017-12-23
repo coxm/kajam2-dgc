@@ -4,6 +4,7 @@ import { AbstractState } from './states/abstract';
 import { Level } from './states/level';
 import { Title } from './states/title';
 import { Constants } from './constants';
+import { SoundChannel } from './objects/soundChannel';
 
 export class MyGame extends Phaser.Game {
 
@@ -15,6 +16,10 @@ export class MyGame extends Phaser.Game {
     mute: boolean = false;
     muteKeyDown: boolean = false;
 
+    musicChannel: SoundChannel;
+    ambientChannel: SoundChannel;
+    sfxChannel: SoundChannel;
+
     constructor() {
         super(Constants.WIDTH, Constants.HEIGHT, Phaser.CANVAS, '', {
             preload: () => this.preload()
@@ -23,6 +28,7 @@ export class MyGame extends Phaser.Game {
     }
 
     preload() {
+        this.initSound();
         this.initCanvas();
         this.initStates();
     }
@@ -41,11 +47,17 @@ export class MyGame extends Phaser.Game {
         this.state.add('Title', Title);
 
         for (let i = 0; i < Constants.LEVEL_COUNT; ++i) {
-            const level = new Level(i);
+            const level = new Level(i, this);
             this.state.add(level.name, level);
         }
 
         this.state.start('Boot');
+    }
+
+    initSound() {
+        this.musicChannel = new SoundChannel(this);
+        this.ambientChannel = new SoundChannel(this);
+        this.sfxChannel = new SoundChannel(this);
     }
 
     renderCanvas() {

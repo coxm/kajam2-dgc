@@ -1,15 +1,20 @@
+import { MyGame } from '../index';
+
 export class Boot extends Phaser.State {
     init() {
     }
 
     preload() {
+        // Loading screen assets
         this.load.image('loadingBarBg', 'assets/images/loading-bar-bg.png');
         this.load.image('loadingBar', 'assets/images/loading-bar.png');
-
-        this.load.spritesheet('tiles', 'assets/images/tiles.png', 32, 32);
+        this.load.audio('ambient_boot', 'assets/audio/ambient_boot.mp3');
     }
 
     create() {
+        let myGame: MyGame = (this.game as MyGame);
+        myGame.ambientChannel.play('ambient_boot');
+
         this.game.input.maxPointers = 1;
         this.game.antialias = false;
         this.game.renderer.renderSession.roundPixels = true;
@@ -30,8 +35,7 @@ export class Boot extends Phaser.State {
         this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.ENTER);
         this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.ESC);
         this.game.input.keyboard.addKeyCapture(Phaser.Keyboard.M);
-        
-        //this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; // Use max screen space
+
         this.game.state.start('Loading');
     }
 }

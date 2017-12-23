@@ -5,6 +5,20 @@ import { AbstractState } from './abstract';
 export class Loading extends AbstractState {
     ready: boolean = false;
 
+    readonly SOUNDS: string[] = [
+        'ambient_loop',
+        'item',
+        'jump',
+        'jump_cat',
+        'land',
+        'menu_change',
+        'menu_confirm',
+        'music_level',
+        'music_title',
+        'super_item',
+        'walk'
+    ];
+
     private message = {
         text: null as Phaser.Text | null,
         lastChanged: Date.now(),
@@ -48,7 +62,9 @@ export class Loading extends AbstractState {
         this.game.load.spritesheet('tilesetSheet', 'assets/images/tileset.png', 16, 16);
         this.game.load.spritesheet('hardwareSheet', 'assets/images/hardware.png', 32, 32);
 
-        this.game.load.audio('jump', 'assets/audio/jump.wav');
+        for (let soundName of this.SOUNDS) {
+            this.game.load.audio(soundName, ['assets/audio/' + soundName + '.ogg', 'assets/audio/' + soundName + '.mp3']);
+        }
 
         this.game.load.tilemap('TitleScreen', 'assets/tilemaps/TitleScreen.json', null, Phaser.Tilemap.TILED_JSON);
 
@@ -81,7 +97,7 @@ export class Loading extends AbstractState {
     ) {
         if (progress === 100) {
             // Nothing says retro like slow loading.
-            setTimeout((): void => { this.ready = true; }, 1000);
+            setTimeout((): void => { this.ready = true; }, Constants.DEBUG_FAST_LOADING ? 0 : 5000);
         }
     }
 }

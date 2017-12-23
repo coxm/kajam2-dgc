@@ -24,7 +24,7 @@ export class Menu extends Phaser.Sprite {
     callbackBinding: object;
 
     constructor(game : Phaser.Game, x : number, y : number, options: string[], callback: Function, callbackBinding: object) {
-        super(game, x, y, 'tileset', 48);
+        super(game, x, y, 'tilesetSheet', 48);
 
         this.game = game;
         this.baseY = y;
@@ -51,16 +51,17 @@ export class Menu extends Phaser.Sprite {
         if (this.upKey.justDown) {
             this.selected = (this.selected - 1 + this.max) % this.max;
             this.refreshPosition();
-            this.sounds.play('jump');
+            this.sounds.play('menu_change');
         }
         if (this.downKey.justDown) {
             this.selected = (this.selected + 1) % this.max;
             this.refreshPosition();
-            this.sounds.play('jump');
+            this.sounds.play('menu_change');
         }
         if (this.enterKey.justDown) {
-            this.callback.call(this.callbackBinding, this.selected);
-            this.sounds.play('jump');
+            let selection = this.selected;
+            setTimeout((): void => { this.callback.call(this.callbackBinding, selection) }, 400);
+            this.sounds.play('menu_confirm');
         }
     }
 

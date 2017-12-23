@@ -37,7 +37,9 @@ export class Cat extends LivingThing {
 
         this.nextJump -= this.game.time.elapsed / 1000;
         if (this.nextJump < 0) {
-            this.jump();
+            if (this.jump()) {
+                this.soundChannel.play('jump_cat', false, 0.4);
+            }
             this.nextJump = Math.random();
         }
         this.body.velocity.x = this.direction * 50;

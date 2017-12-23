@@ -42,6 +42,10 @@ export abstract class LivingThing extends Phaser.Sprite {
 
     abstract getJumpSpeed(): number;
 
+    onLanding() {
+        // Override me
+    }
+
     update() {
       if (!this.canJump && this.floorShape !== null && this.body.velocity.y > -1) {
           // Jumped while hitting a ceiling
@@ -54,7 +58,6 @@ export abstract class LivingThing extends Phaser.Sprite {
           this.body.velocity.y = -this.getJumpSpeed();
           this.canJump = false;
           this.neverJumped = true;
-          this.soundChannel.play('jump');
           return true;
       } else {
           return false;
@@ -65,6 +68,7 @@ export abstract class LivingThing extends Phaser.Sprite {
         if (shape === this.jumpDetector) {
             this.canJump = true;
             this.floorShape = otherShape;
+            this.onLanding();
         }
     }
 

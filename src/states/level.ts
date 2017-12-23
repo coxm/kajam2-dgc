@@ -70,10 +70,13 @@ export class Level extends AbstractState {
     private pickups: Pickup[] = [];
     private collisionGroups: CollisionGroups | null = null;
     private hardwarePartCount: number = 0;
+    private escapeKey: Phaser.Key;
+    private myGame : MyGame;
 
-    constructor(readonly id: number) {
+    constructor(readonly id: number, game: MyGame) {
         super();
         this.name = toLevelName(id);
+        this.myGame = game;
     }
 
     preload(): void {
@@ -95,6 +98,8 @@ export class Level extends AbstractState {
     create(): void {
         let tilesetKey = TILESETS[this.name] || 'tileset';
         this.stage.backgroundColor = '#555';
+
+        this.escapeKey = this.input.keyboard.addKey(Phaser.Keyboard.ESC);
 
         this.collisionGroups = new CollisionGroups(this.game);
 
@@ -148,6 +153,19 @@ export class Level extends AbstractState {
             }
         }
         return null;
+    }
+
+    update() {
+        if (this.myGame.ambientChannel.lastPlayed !== 'ambient_loop') {
+            this.myGame.ambientChannel.play('ambient_loop', true);
+        }
+        if (this.myGame.musicChannel.lastPlayed !== 'music_level') {
+            this.myGame.musicChannel.play('music_level', true, 0.8);
+        }
+        if (this.escapeKey.justDown) {
+            setTimeout((): void => { this.state.start('Title'); }, 400);
+            this.myGame.sfxChannel.play('menu_confirm');
+        }
     }
 
     proceedToNextLevel(): void {

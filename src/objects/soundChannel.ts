@@ -8,6 +8,7 @@ export class SoundChannel {
 
     game: Phaser.Game;
     sounds: { [key:string]: Phaser.Sound } = {};
+    lastPlayed: string|null = null;
 
     constructor(game: Phaser.Game) {
         this.game = game;
@@ -19,14 +20,15 @@ export class SoundChannel {
         }
     }
 
-    play(key: string, loop: boolean = false): void {
+    play(key: string, loop: boolean = false, volume: number = 1): void {
         if (!Constants.DEBUG_MUTE && !(this.game as MyGame).mute) {
             this.add(key);
             for (let storedKey in this.sounds) {
                 let sound: Phaser.Sound = this.sounds[storedKey];
                 if (storedKey === key) {
                     sound.loop = loop;
-                    sound.play();
+                    sound.play(undefined, undefined, volume);
+                    this.lastPlayed = key;
                 } else {
                     sound.stop();
                 }
@@ -47,10 +49,13 @@ export class SoundChannel {
         }
     }
 
-    get(key: string): Phaser.Sound | null {
-        this.add(key);
-        return this.sounds[key];
+    get(key: string|null): Phaser.Sound | null {
+        if (key !== null) {
+            this.add(key);
+            return this.sounds[key];
+        } else {
+            return null;
+        }
     }
-
 
 }

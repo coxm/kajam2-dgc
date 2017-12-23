@@ -1,6 +1,5 @@
 import { CollisionGroups } from '../objects/collisionGroups';
 import { Constants } from '../constants';
-import { SoundChannel } from './soundChannel';
 import { LivingThing } from './livingThing';
 
 const JUMP_SPEEDS: number[] = [
@@ -44,7 +43,9 @@ export class Player extends LivingThing {
       this.body.velocity.x = dx/(Math.abs(dx) || 1) * Math.min(this.MOVEMENT_SPEED, Math.abs(dx)); // clamp
 
       if (this.canJump && !this.downKeyHeld && this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-          this.jump();
+          if (this.jump()) {
+              this.soundChannel.play('jump');
+          }
           this.downKeyHeld = true;
       }
       if (this.downKeyHeld && !this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
@@ -64,6 +65,10 @@ export class Player extends LivingThing {
     getJumpSpeed(): number {
       let effectiveJumpLevel = Math.min(this.jumpLevel, JUMP_SPEEDS.length - 1);
       return JUMP_SPEEDS[effectiveJumpLevel];
+    }
+
+    onLanding() {
+        this.soundChannel.play('land', false, 0.5);
     }
 
 }
