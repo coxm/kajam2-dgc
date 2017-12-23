@@ -55,7 +55,7 @@ export class MyGame extends Phaser.Game {
         this.state.add('Loading', Loading);
         this.state.add('Title', Title);
 
-        for (let i = 0; i < Constants.LEVEL_COUNT; ++i) {
+        for (let i = 1; i <= Constants.LEVEL_COUNT; ++i) {
             const level = new Level(i, this);
             this.state.add(level.name, level);
         }
@@ -65,7 +65,7 @@ export class MyGame extends Phaser.Game {
 
     get score(): Score {
         if (this._score === null) {
-            this._score = new Score(this, Constants.LEVEL_COUNT, 0);
+            this._score = new Score(this, Constants.LEVEL_COUNT, Constants.DEBUG_FORCE_SCORE || 0);
         }
         return this._score;
     }

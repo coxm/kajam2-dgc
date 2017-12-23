@@ -6,6 +6,7 @@ export class Score  {
     private label: Phaser.BitmapText;
     private hardware: Phaser.Image[] = [];
     private hardwareMissing: Phaser.Image[] = [];
+    private help: Phaser.BitmapText;
 
     constructor(
         game: Phaser.Game,
@@ -24,6 +25,9 @@ export class Score  {
             this.hardware.push(sprite);
         }
 
+        this.help = game.make.bitmapText(135, 8, 'terminal', 'R = restart, ESC = quit', 11);
+        this.help.fixedToCamera = true;
+
         this.refresh();
     }
 
@@ -34,7 +38,7 @@ export class Score  {
     set max(m: number) {
         this._max = m;
         this.refresh();
-    }
+    } 
 
     get value(): number {
         return this._val;
@@ -48,6 +52,7 @@ export class Score  {
     addToWorld(world: Phaser.World) {
         world.add(this.background);
         world.add(this.label);
+        world.add(this.help);
         for (let sprite of this.hardware) {
             world.add(sprite);
         }

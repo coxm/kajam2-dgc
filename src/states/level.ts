@@ -15,7 +15,7 @@ const TILESETS: {[levelId: string]: string;} = {
 };
 
 
-const toLevelName = (id: number|string): string => {
+export const toLevelName = (id: number|string): string => {
     if (typeof id === 'number') {
         let str = 'Level';
         if (id < 10) {
@@ -40,6 +40,7 @@ export class Level extends AbstractState {
     private collisionGroups: CollisionGroups | null = null;
     private hardwarePartCount: number = 0;
     private escapeKey: Phaser.Key;
+    private restartKey: Phaser.Key;
     private hideGui: boolean;
 
     protected myGame : MyGame;
@@ -52,6 +53,8 @@ export class Level extends AbstractState {
     }
 
     preload(): void {
+        console.log("Starting level " + this.name);
+
         this.load.tilemap(
             this.name,
             `assets/tilemaps/${this.name}.json`,
@@ -72,6 +75,7 @@ export class Level extends AbstractState {
         this.stage.backgroundColor = '#555';
 
         this.escapeKey = this.input.keyboard.addKey(Phaser.Keyboard.ESC);
+        this.restartKey = this.input.keyboard.addKey(Phaser.Keyboard.R);
 
         this.collisionGroups = new CollisionGroups(this.game);
 
@@ -103,9 +107,15 @@ export class Level extends AbstractState {
         }
 
         // Suspect the Phaser typings are out of date here.
-        for (const obj of (this.tilemap.objects as any).Pickups) {
+        let objectLayers = this.tilemap.objects as any
+        for (const obj of objectLayers.Pickups) {
             this.pickups.push(new Pickup(this.game, this.collisionGroups, obj));
             if (obj.type === 'hardware') this.hardwarePartCount++;
+        }
+        if (objectLayers.Text) {
+            for (const obj of objectLayers.Text) {
+                this.addText(obj.x, obj.y, obj.type.replace(/\\n/g, '\n'));
+            }
         }
 
         this.overlay = this.tilemap.createLayer('Overlay');
@@ -139,13 +149,16 @@ export class Level extends AbstractState {
             setTimeout((): void => { this.state.start('Title'); }, 400);
             this.myGame.sfxChannel.play('menu_confirm');
         }
+        if (this.restartKey.justDown) {
+            this.state.restart();
+        }
     }
 
     proceedToNextLevel(): void {
         setTimeout(() => {
             if (typeof this.id === 'number') {
                 let nextLevel = this.id + 1;
-                if (nextLevel < Constants.LEVEL_COUNT) {
+                if (nextLevel <= Constants.LEVEL_COUNT) {
                     this.game.state.start(toLevelName(nextLevel));
                 } else {
                     this.game.state.start('Title'); // End

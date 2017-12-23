@@ -2,7 +2,7 @@ import { CollisionGroups } from '../objects/collisionGroups';
 import { Constants } from '../constants';
 import { SoundChannel } from './soundChannel';
 
-const OPTION_SPACING = 16;
+const OPTION_SPACING = 13;
 const LEGEND_OFFSET = new Phaser.Point(20, 4);
 
 export class Menu extends Phaser.Sprite {
