@@ -1,4 +1,4 @@
-import { Level, toLevelName } from './Level';
+import { Level, toLevelName } from './level';
 import { Menu } from '../objects/menu';
 import { SoundChannel } from '../objects/soundChannel';
 import { MyGame } from '../index';

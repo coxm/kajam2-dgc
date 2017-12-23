@@ -1,4 +1,4 @@
-import { Level } from './Level';
+import { Level } from './level';
 import { Menu } from '../objects/menu';
 import { MyGame } from '../index';
 
