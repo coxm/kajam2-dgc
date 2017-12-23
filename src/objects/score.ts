@@ -25,7 +25,7 @@ export class Score  {
             this.hardware.push(sprite);
         }
 
-        this.help = game.make.bitmapText(135, 8, 'terminal', 'R = restart, ESC = quit', 11);
+        this.help = game.make.bitmapText(135, 8, 'terminal', 'R = restart', 11);
         this.help.fixedToCamera = true;
 
         this.refresh();

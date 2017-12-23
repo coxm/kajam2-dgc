@@ -105,6 +105,7 @@ Best of luck for completing Kommandant RNLF!
     onMenuExit(selectedOption: number) {
         switch (selectedOption) {
              case 0:
+                 this.currentPage++;
                  this.text.text = this.getCurrentPageText();
                  break;
 
@@ -118,7 +119,7 @@ Best of luck for completing Kommandant RNLF!
     }
 
     getCurrentPageText() {
-        return this.pages[(++this.currentPage) % this.pages.length];
+        return this.pages[this.currentPage % this.pages.length];
     }
 
 }
