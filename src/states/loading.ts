@@ -80,7 +80,10 @@ export class Loading extends AbstractState {
         this.message.update();
 
         if (this.ready) {
-            if (Constants.DEBUG_FORCE_LEVEL) {
+            if (Constants.DEBUG_FORCE_ENDING) {
+                this.game.state.start('Ending');
+            }
+            else if (Constants.DEBUG_FORCE_LEVEL) {
                 console.log("Debug: loading level " + Constants.DEBUG_FORCE_LEVEL)
                 this.game.state.start(Constants.DEBUG_FORCE_LEVEL);
             } else if (Constants.DEBUG_SKIP_TITLE) {
