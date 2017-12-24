@@ -6,6 +6,7 @@ import { Title } from './states/title';
 import { Story } from './states/story';
 import { Controls } from './states/controls';
 import { Ending } from './states/ending';
+import { Credits } from './states/credits';
 import { Constants } from './constants';
 import { SoundChannel } from './objects/soundChannel';
 import { Score } from './objects/score';
@@ -59,6 +60,7 @@ export class MyGame extends Phaser.Game {
         this.state.add('Title', Title);
         this.state.add('Story', Story);
         this.state.add('Controls', Controls);
+        this.state.add('Credits', Credits);
         this.state.add('Ending', Ending);
 
         for (let i = 1; i <= Constants.LEVEL_COUNT; ++i) {

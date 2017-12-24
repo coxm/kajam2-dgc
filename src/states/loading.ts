@@ -20,7 +20,7 @@ export class Loading extends AbstractState {
     ];
 
     private message = {
-        text: null as Phaser.Text | null,
+        text: null as Phaser.BitmapText | null,
         lastChanged: Date.now(),
         frameDuration: 512,
         spinners: '-/|\\',
@@ -36,17 +36,18 @@ export class Loading extends AbstractState {
         },
     };
 
+    preload() {
+        this.game.load.bitmapFont('terminal_white', 'assets/images/terminal11white_0.png', 'assets/images/terminal11.fnt');
+    }
+
     create() {
-        this.message.text = this.add.text(
-            this.world.centerX - 30,
-            this.world.centerY - 30,
+        this.message.text = this.addText(
+            this.world.centerX - 40,
+            this.world.centerY - 25,
             'Loading...',
-            {
-                font: '11px Terminal',
-                fill: '#fff',
-                fontWeight: 'bold',
-            }
+            'white'
         );
+
         // Anchor from the left so it doesn't move when the spinner changes.
         this.message.text.anchor.setTo(0);
         this.stage.backgroundColor = '0x00f';

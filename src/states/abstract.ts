@@ -10,8 +10,15 @@
         (this.game as MyGame).renderCanvas();
     }
 
-    addText(x: number, y: number, text: string, light: boolean = false): Phaser.BitmapText {
-        return this.add.bitmapText(x, y, (light ? 'terminal_light' : 'terminal'), text, 11)
+    /**
+     * @param  {number}            x  
+     * @param  {number}            y  
+     * @param  {string}            text 
+     * @param  {string|null}       variant    Can be: "light", "white", or left empty
+     * @return {Phaser.BitmapText} 
+     */
+    addText(x: number, y: number, text: string, variant: string|null = null): Phaser.BitmapText {
+        return this.add.bitmapText(x, y, 'terminal' + (variant ? '_' + variant : ''), text, 11)
     }
 
     addBigText(x: number, y: number, text: string): Phaser.BitmapText {

@@ -6,9 +6,9 @@ import { Constants } from '../constants';
 
 export class Title extends Level {
 
-    logo: Phaser.Sprite;
-    musicStartTime: number = 0;
-    showContinueOption: boolean;
+    private logo: Phaser.Sprite;
+    private musicStartTime: number = 0;
+    private delKey: Phaser.Key;
 
     constructor(game: MyGame) {
         super('TitleScreen', game, true);
@@ -17,18 +17,20 @@ export class Title extends Level {
     create() {
         super.create();
 
-        this.showContinueOption = this.myGame.score.value > 0;
+        this.delKey = this.input.keyboard.addKey(Phaser.KeyCode.DELETE);
 
         this.logo = this.add.sprite(0, 0, 'title');
 
-        let options = ['Start game', 'Story', 'Controls'];
-        if (this.showContinueOption) {
-            options.splice(0, 1, 'Continue game', 'Restart game');
+        let options = ['Start game', 'Story', 'Controls', 'Credits'];
+        if (this.myGame.score.value === 0) {
+            this.addText(104, 215, '(please use UP/DOWN and ENTER)', 'light');
+        } else {
+            this.addText(104, 215, '(press DEL to reset your save)', 'light');
+            options[0] = 'Continue game';
         }
-        let menu = new Menu(this.game, 100, 160, options, this.onMenuExit, this)
-        this.world.add(menu);
 
-        this.addText(104, 215, '(please use UP/DOWN and ENTER)', true);
+        let menu = new Menu(this.game, 100, 158, options, this.onMenuExit, this)
+        this.world.add(menu);
     }
 
     update() {
@@ -44,31 +46,31 @@ export class Title extends Level {
 
         // Animate logo
         this.logo.y = -8./*px*/ * (((this.game.time.time - this.musicStartTime) * 129/*bpm*/ / 60) % 1000) / 1000;
+
+        if (this.delKey.justDown) {
+            this.myGame.score.value = 0;
+            this.state.restart();
+        }
     }
 
 
     onMenuExit(selectedOption: number) {
-        if (!this.showContinueOption) {
-            selectedOption++;
-        }
-
         switch (selectedOption) {
-             case 0: // Continue game
+             case 0:
                  let levelId = Math.min(this.myGame.score.value + 1, Constants.LEVEL_COUNT);
                  this.state.start(toLevelName(levelId));
                  break;
 
-             case 1: // Start game
-                 this.myGame.score.value = 0;
-                 this.state.start('Level01');
-                 break;
-
-             case 2: 
+             case 1: 
                  this.state.start('Story');
                  break;
 
-             case 3: 
+             case 2: 
                  this.state.start('Controls');
+                 break;
+
+             case 3: 
+                 this.state.start('Credits');
                  break;
 
              default:
