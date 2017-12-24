@@ -176,7 +176,7 @@ export class Level extends AbstractState {
     update() {
         this.ensureAmbientSound();
         if (this.myGame.musicChannel.lastPlayed !== 'music_level') {
-            this.myGame.musicChannel.play('music_level', true, 0.8);
+            this.myGame.musicChannel.play('music_level', true, 0.9);
         }
         if (this.escapeKey.justDown) {
             setTimeout((): void => { this.state.start('Title'); }, 400);

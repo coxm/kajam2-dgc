@@ -51,7 +51,7 @@ export class Player extends LivingThing {
       if (this.canJump && walking) {
           this.walkSoundDelay -= this.game.time.elapsedMS;
           if (this.walkSoundDelay < 0) {
-              this.soundChannel.play('walk', false, 0.9);
+              this.soundChannel.play('walk', false, 1);
               this.walkSoundDelay = WALK_SOUND_INITIAL_DELAY;
           }
       } else {

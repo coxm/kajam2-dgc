@@ -34,7 +34,9 @@ into a dangerous maze...`;
 
     update() {
         this.ensureAmbientSound();
-        this.myGame.musicChannel.stopChannel();
+        if (this.myGame.musicChannel.lastPlayed !== 'music_menu') {
+            this.myGame.musicChannel.play('music_menu', true);
+        }
         if (this.escapeKey.justDown) {
             this.state.start('Title');
             this.myGame.sfxChannel.play('menu_confirm');

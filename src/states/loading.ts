@@ -14,6 +14,7 @@ export class Loading extends AbstractState {
         'menu_change',
         'menu_confirm',
         'music_level',
+        'music_menu',
         'music_title',
         'super_item',
         'walk'
