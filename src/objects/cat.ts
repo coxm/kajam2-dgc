@@ -15,7 +15,7 @@ export class Cat extends LivingThing {
     }
 
     initShapesAndReturnJumpDetector(body: p2.Body): p2.Rectangle {
-        this.body.addShape(new p2.Rectangle(0.75, 0.75), 0, 0.5);
+        this.body.addShape(new p2.Circle(0.375), 0, 0.5);
         let jumpDetector = new p2.Rectangle(0.5, 0.5);
         jumpDetector.sensor = true;
         this.body.addShape(jumpDetector, 0, 8);
