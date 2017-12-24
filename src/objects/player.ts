@@ -75,8 +75,21 @@ export class Player extends LivingThing {
     }
 
     initShapesAndReturnJumpDetector(body: p2.Body): p2.Rectangle {
-        this.body.addShape(new p2.Rectangle(0.75, 1.5), 0, 0.5);
-        let jumpDetector = new p2.Rectangle(0.6, 0.1);
+        // Set up an octogon (rectangle with slightly cut corners) to prevent getting stuck between tiles
+        this.body.addPolygon({}, [ 
+            [-7.5, -14],
+            [-6, -15.5],
+
+            [6, -15.5],
+            [7.5, -14],
+
+            [7.5, 14],
+            [6, 15.5],
+
+            [-6, 15.5],
+            [-7.5, 14]
+        ]);
+        let jumpDetector = new p2.Rectangle(1.1, 0.1);
         jumpDetector.sensor = true;
         this.body.addShape(jumpDetector, 0, 16);
         return jumpDetector;
