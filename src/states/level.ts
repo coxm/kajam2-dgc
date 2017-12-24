@@ -29,6 +29,16 @@ export const toLevelName = (id: number|string): string => {
 };
 
 
+const findLayer = (tilemap: Phaser.Tilemap, name: string): boolean|null => {
+    for (let i = 0, len = tilemap.layers.length; i < len; ++i) {
+        const layer = tilemap.layers[i];
+        if (layer.name === name) {
+            return layer;
+        }
+    }
+    return null;
+};
+
 
 export class Level extends AbstractState {
     readonly name: string;
@@ -37,6 +47,7 @@ export class Level extends AbstractState {
     private layer: Phaser.TilemapLayer | null = null;
     private player: Player | null = null;
     private overlay: Phaser.TilemapLayer | null = null;
+    private underlay: Phaser.TilemapLayer | null = null;
     private pickups: Pickup[] = [];
     private collisionGroups: CollisionGroups | null = null;
     private hardwarePartCount: number = 0;
@@ -95,6 +106,10 @@ export class Level extends AbstractState {
             tile.debug = Constants.DEBUG_TILE_BODIES;
         }
 
+        if (findLayer(this.tilemap, 'Underlay')) {
+            this.underlay = this.tilemap.createLayer('Underlay');
+        }
+
         let catSpawn: Phaser.Point|null = this.getSpawnPoint(this.tilemap, 'cat');
         if (catSpawn !== null) {
             this.world.add(new Cat(this.game, this.collisionGroups, catSpawn.x, catSpawn.y));
@@ -119,7 +134,9 @@ export class Level extends AbstractState {
             }
         }
 
-        this.overlay = this.tilemap.createLayer('Overlay');
+        if (findLayer(this.tilemap, 'Overlay')) {
+            this.overlay = this.tilemap.createLayer('Overlay');
+        }
 
         if (!this.hideGui) {
             this.myGame.score.addToWorld(this.world);
