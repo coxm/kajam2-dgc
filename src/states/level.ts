@@ -9,6 +9,8 @@ import { Constants } from '../constants';
 import { MyGame } from '../index';
 import { AbstractState } from './abstract';
 import { SoundChannel } from '../objects/soundChannel';
+import { Pogometer } from '../objects/pogometer';
+
 
 const TILESETS: {[levelId: string]: string;} = {
     'Level01': 'tileset',
@@ -41,6 +43,7 @@ const findLayer = (tilemap: Phaser.Tilemap, name: string): boolean|null => {
 
 
 export class Level extends AbstractState {
+    pogometer: Pogometer | null = null;
     readonly name: string;
 
     private tilemap: Phaser.Tilemap | null = null;
@@ -148,6 +151,10 @@ export class Level extends AbstractState {
         }
 
         if (!this.hideGui) {
+            const pickups: Pickup[] = (this.tilemap.objects as any).Pickups;
+            const numPogos: number =
+                pickups.filter((pickup: any) => pickup.type === 'pogo').length;
+            this.pogometer = new Pogometer(this.game, 0, 80, numPogos);
             this.myGame.score.addToWorld(this.world);
         }
     }
