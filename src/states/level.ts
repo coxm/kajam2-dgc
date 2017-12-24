@@ -128,6 +128,15 @@ export class Level extends AbstractState {
             this.pickups.push(new Pickup(this.game, this.collisionGroups, obj));
             if (obj.type === 'hardware') this.hardwarePartCount++;
         }
+        let animationFrames = [37, 38, 39, 40];
+        for (const obj of objectLayers.Players) {
+            if (obj.type === 'smoke') {
+                let smoke = this.add.sprite(obj.x, obj.y - 16, 'tilesetSheet', 37);
+                smoke.animations.add('smoke', animationFrames);
+                smoke.animations.play('smoke', 10, true);
+                animationFrames.push(animationFrames.shift() as number);
+            }
+        }
         if (objectLayers.Text) {
             for (const obj of objectLayers.Text) {
                 this.addText(obj.x, obj.y, obj.type.replace(/\\n/g, '\n'));

@@ -27,6 +27,7 @@ export namespace Constants {
     export const DEBUG_TILE_BODIES: boolean = !!search['debug-tile-bodies'];
     export const DEBUG_FORCE_LEVEL: string | null = search['level'] || null;
     export const DEBUG_FORCE_SCORE: number | null = null;
+    export const DEBUG_FORCE_ENDING: boolean = !!search['debug-force-ending'];
     export const DEBUG_SHAPES: boolean = false;
     export const DEBUG_MUTE: boolean = false;
     export const DEBUG_SKIP_TITLE: boolean = false;
