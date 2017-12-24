@@ -10,7 +10,8 @@ const JUMP_SPEEDS: number[] = [
     460,
     530,  // 5
     590,
-    650
+    650,
+    710
 ]
 
 const WALK_SOUND_INITIAL_DELAY = 250;
