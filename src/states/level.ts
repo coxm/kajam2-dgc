@@ -151,9 +151,8 @@ export class Level extends AbstractState {
         }
 
         if (!this.hideGui) {
-            const pickups: Pickup[] = (this.tilemap.objects as any).Pickups;
-            const numPogos: number =
-                pickups.filter((pickup: any) => pickup.type === 'pogo').length;
+            const numPogos: number = objectLayers.Pickups.filter(
+                (pickup: any) => pickup.type === 'pogo').length;
             this.pogometer = new Pogometer(this.game, 0, 80, numPogos);
             this.myGame.score.addToWorld(this.world);
         }

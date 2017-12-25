@@ -39,19 +39,29 @@ type TraitsFactory =
 export const traits: {[pickupName: string]: TraitsFactory;} = {};
 
 
+const hardwareGids: number[] = [257, 258, 259, 260, 282];
+
+
 export class Pickup extends Phaser.Sprite {
     readonly traits: Traits;
-    private consumer: Phaser.Sprite | null = null;
+    readonly defn: PickupOptions;
+    private consumer: Phaser.Sprite | null;
 
     constructor(
         game: Phaser.Game,
         collisionGroups: CollisionGroups,
-        readonly defn: PickupOptions
+        defn: PickupOptions
     ) {
         // Not sure why but the GID seems to be one too large.
-        super(game, defn.x, defn.y,
-            (defn.type === 'hardware') ? 'hardwareSheet' : 'tilesetSheet',
-            (defn.type === 'hardware') ? defn.gid - 257 : defn.gid - 1);
+        let gid: number = defn.gid - 1;
+        let tileset = 'tilesetSheet';
+        if (defn.type === 'hardware') {
+            tileset = 'hardwareSheet';
+            gid = hardwareGids.indexOf(defn.gid);
+        }
+        super(game, defn.x, defn.y, tileset, gid);
+        this.consumer = null;
+        this.defn = defn;
 
         console.assert(!!defn.type, 'Pickup type is undefined');
         console.assert(!!traits[defn.type], 'No such pickup traits:', defn.type);
