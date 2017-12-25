@@ -39,7 +39,14 @@ type TraitsFactory =
 export const traits: {[pickupName: string]: TraitsFactory;} = {};
 
 
-const hardwareGids: number[] = [257, 258, 259, 260, 282];
+const hardwareGids: {[tiledGid: number]: number;} = {
+    257: 0,
+    258: 1,
+    259: 2,
+    260: 3,
+    261: 4,
+    282: 4,
+};
 
 
 export class Pickup extends Phaser.Sprite {
@@ -57,7 +64,8 @@ export class Pickup extends Phaser.Sprite {
         let tileset = 'tilesetSheet';
         if (defn.type === 'hardware') {
             tileset = 'hardwareSheet';
-            gid = hardwareGids.indexOf(defn.gid);
+            gid = hardwareGids[defn.gid];
+            console.log('hardware', defn.gid, gid);
         }
         super(game, defn.x, defn.y, tileset, gid);
         this.consumer = null;
