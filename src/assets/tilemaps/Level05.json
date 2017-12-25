@@ -133,50 +133,14 @@
                  "y":432
                 }, 
                 {
-                 "gid":282,
-                 "height":16,
-                 "id":64,
-                 "name":"",
-                 "rotation":0,
-                 "type":"hardware",
-                 "visible":true,
-                 "width":16,
-                 "x":464,
-                 "y":64
-                }, 
-                {
-                 "gid":274,
-                 "height":16,
-                 "id":66,
-                 "name":"",
-                 "rotation":0,
-                 "type":"hardware",
-                 "visible":true,
-                 "width":16,
-                 "x":464,
-                 "y":48
-                }, 
-                {
                  "gid":273,
-                 "height":16,
-                 "id":67,
+                 "height":32,
+                 "id":69,
                  "name":"",
                  "rotation":0,
                  "type":"hardware",
                  "visible":true,
-                 "width":16,
-                 "x":448,
-                 "y":48
-                }, 
-                {
-                 "gid":281,
-                 "height":16,
-                 "id":68,
-                 "name":"",
-                 "rotation":0,
-                 "type":"hardware",
-                 "visible":true,
-                 "width":16,
+                 "width":32,
                  "x":448,
                  "y":64
                 }],
@@ -197,7 +161,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":69,
+ "nextobjectid":70,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
