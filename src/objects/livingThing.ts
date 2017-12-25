@@ -4,8 +4,12 @@ import { SoundChannel } from './soundChannel';
 
 export abstract class LivingThing extends Phaser.Sprite {
 
+    private readonly OFF_LEDGE_JUMP_DELAY = 50;
+
     private jumpDetector: p2.Rectangle;
     private collidingFloorShapes: any[] = [];
+    private fellLedgeTime: number = 0;
+    private jumping: boolean = false;
 
     soundChannel: SoundChannel;
 
@@ -46,6 +50,8 @@ export abstract class LivingThing extends Phaser.Sprite {
     protected jump(): boolean {
       if (this.canJump) {
           this.body.velocity.y = -this.getJumpSpeed();
+          this.fellLedgeTime = 0;
+          this.jumping = true;
           return true;
       } else {
           return false;
@@ -53,12 +59,13 @@ export abstract class LivingThing extends Phaser.Sprite {
     }
 
     get canJump(): boolean {
-        return this.collidingFloorShapes.length > 0
+        return this.collidingFloorShapes.length > 0 || this.game.time.time - this.fellLedgeTime < this.OFF_LEDGE_JUMP_DELAY;
     }
 
     onBeginContact(body: Phaser.Physics.P2.Body, otherBody: Phaser.Physics.P2.Body, shape: any, otherShape: any, contactEqs: any[]) {
         if (shape === this.jumpDetector) {
             if (this.collidingFloorShapes.length === 0) {
+                this.jumping = false;
                 this.onLanding();
             }
             if (this.collidingFloorShapes.indexOf(otherShape) === -1) {
@@ -72,6 +79,9 @@ export abstract class LivingThing extends Phaser.Sprite {
             let index = this.collidingFloorShapes.indexOf(otherShape)
             if (index !== -1) {
                 this.collidingFloorShapes.splice(index, 1);
+            }
+            if (this.collidingFloorShapes.length === 0 && !this.jumping) {
+                this.fellLedgeTime = this.game.time.time;
             }
         }
     }
