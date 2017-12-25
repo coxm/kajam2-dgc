@@ -89,7 +89,7 @@ export class Player extends LivingThing {
             [-6, 15.5],
             [-7.5, 14]
         ]);
-        let jumpDetector = new p2.Rectangle(0.7, 0.1);
+        let jumpDetector = new p2.Rectangle(0.5, 0.1);
         jumpDetector.sensor = true;
         this.body.addShape(jumpDetector, 0, 16);
         return jumpDetector;

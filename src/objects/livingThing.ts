@@ -4,7 +4,7 @@ import { SoundChannel } from './soundChannel';
 
 export abstract class LivingThing extends Phaser.Sprite {
 
-    private readonly OFF_LEDGE_JUMP_DELAY = 50;
+    private readonly OFF_LEDGE_JUMP_DELAY = 80;
 
     private jumpDetector: p2.Rectangle;
     private collidingFloorShapes: any[] = [];
